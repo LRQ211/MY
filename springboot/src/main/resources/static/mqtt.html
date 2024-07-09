@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MQTT Messages</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow: hidden;
+      position: relative;
+      background: #000; /* 黑色背景 */
+    }
+
+    h1 {
+      font-size: 3em;
+      margin: 20px 0;
+      color: #ffffff; /* 白色字体 */
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+    }
+
+    #container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 60%;
+      max-width: 1200px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      z-index: 1;
+    }
+
+    #messages {
+      width: 100%;
+      max-width: 800px;
+      margin: 20px 0;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      overflow-y: auto;
+      max-height: 60vh;
+    }
+
+    .message {
+      border-bottom: 1px solid #ddd;
+      padding: 10px;
+      margin: 10px 0;
+      background: rgba(240, 248, 226, 0.6);
+      border-radius: 5px;
+    }
+
+    .message p {
+      margin: 5px 0;
+    }
+
+    .message:last-child {
+      border-bottom: none;
+    }
+
+    /* 流星动态背景 */
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 0 6px white, 0 0 12px white, 0 0 18px white, 0 0 24px white;
+      animation: star-animation 10s linear infinite;
+    }
+
+    @keyframes star-animation {
+      0% {
+        transform: translate(0, 0);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(100vw, 100vh);
+        opacity: 0;
+      }
+    }
+  </style>
+  <script>
+    var stompClient = null;
+
+    function connect() {
+      var socket = new SockJS('/gs-guide-websocket');
+      stompClient = Stomp.over(socket);
+      stompClient.connect({}, function (frame) {
+        console.log('Connected: ' + frame);
+        stompClient.subscribe('/topic/greetings', function (greeting) {
+          showGreeting(JSON.parse(greeting.body));
+        });
+      });
+    }
+
+    function showGreeting(message) {
+      var messages = document.getElementById('messages');
+      var messageElement = document.createElement('div');
+      messageElement.className = 'message';
+      messageElement.innerHTML = `
+        <div>
+          <p><strong>Topic:</strong> ${message.topic}</p>
+          <p><strong>Temperature:</strong> ${message.temperature}</p>
+          <p><strong>Humidity:</strong> ${message.humidity}</p>
+          <p><strong>Light:</strong> ${message.light}</p>
+          <p><strong>Distance:</strong> ${message.distance}</p>
+        </div>
+      `;
+      messages.appendChild(messageElement);
+    }
+
+    function loadMessages() {
+      fetch('/api/messages')
+              .then(response => response.json())
+              .then(data => {
+                var messages = document.getElementById('messages');
+                messages.innerHTML = ''; // Clear existing messages
+                data.forEach(function(message) {
+                  showGreeting(message);
+                });
+              });
+    }
+
+    function createStars() {
+      for (let i = 0; i < 100; i++) {  // 增加星星的数量到100
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.top = `${Math.random() * 100}vh`;
+        star.style.left = `${Math.random() * 100}vw`;
+        star.style.animationDuration = `${Math.random() * 5 + 5}s`;  // 设置动画时长为5到10秒之间
+        star.style.animationDelay = `${Math.random() * 5}s`;
+        document.body.appendChild(star);
+      }
+    }
+
+    window.onload = function() {
+      connect();
+      loadMessages(); // Load messages from the database on page load
+      createStars(); // Create stars for the background
+    }
+  </script>
+</head>
+<body>
+<div id="container">
+  <h1>MQTT Messages</h1>
+  <div id="messages"></div>
+</div>
+</body>
+</html>

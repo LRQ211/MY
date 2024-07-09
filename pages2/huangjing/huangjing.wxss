@@ -1,0 +1,297 @@
+/* huangjing.wxss */
+
+/* 其他现有样式 */
+
+/* 更新后的天气组件样式 */
+.weather-card {
+  background-color: #ffe5e5; /* 粉色背景 */
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 5px auto; /* 使组件居中 */
+  max-width: 200px; /* 限制最大宽度 */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* 添加阴影以使其更突出 */
+}
+
+.weather-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.weather-location {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.weather-temperature {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ff4500; /* 温度显示为红色 */
+  margin-bottom: 5px;
+}
+
+.weather-icon {
+  width: 30px;
+  height: 30px;
+  margin-bottom: 5px;
+}
+
+.weather-condition {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.date-time {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.date-time text {
+  font-size: 12px;
+  margin: 2px 0;
+}
+
+.all{
+  display: block;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: #e5ffe5;
+}
+.item{
+  text-align: center;
+  line-height: 80px;
+  font-size:100px ;
+}.weather-box {
+  background-color:   #ffe5e5;
+
+  border-radius: 16px;
+  padding: 25px;
+  width: 70%;
+  height: 60px;
+  position: fixed;
+  top: 4%;
+  left: 6%;
+}
+
+.weather {
+  font-size: 24px;
+  color: #333;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.weather-icon {
+  width: 50px;
+  height: 20px;
+  margin-left: 10px;
+}
+.temperature-box {
+
+  background-color:   #b3ffb3;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 25px;
+  height: 50px;
+  width: 25%;
+  position: fixed;
+  top: 50%;
+  left: 5%;
+
+}
+
+.temperature-icon {
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
+}
+
+.humidity-box {
+  background-color:   #b3ffb3;
+  border: 1px solid #f0f0f0;
+  border-radius: 5px;
+  padding: 25px;
+  height: 50px;
+  width: 25%;
+  position: fixed;
+  top: 50%;
+  left: 55%;
+}
+
+
+.humidity-icon {
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
+}
+
+.Lux-box {
+  background-color:   #b3ffb3;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 25px;
+  height: 50px;
+  width: 25%;
+  position: fixed;
+  top: 75%;
+  left: 5%;
+
+}
+
+
+.Lux-icon {
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
+}
+
+.distance-box {
+  background-color:   #b3ffb3;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 25px;
+  height: 50px;
+  width: 25%;
+  position: fixed;
+  top: 75%;
+  left: 55%;
+}
+
+.distance-icon {
+  width: 20px;
+  height: 20px;
+  margin-left: 0px;
+}
+
+.mqtt-box {
+  
+  display: flex;
+  /* justify-content: space-between; */
+  background:linear-gradient(to right, #e5ffe5,#ffe5e5);
+  font-size: 50rpx;
+  line-height: 100rpx;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 90%;
+  position: fixed;
+  top: 28%;
+  left: 3%;
+}
+
+
+.b1{
+  display: block;
+  margin-top: 1vh;
+  font-size: 3.5vh;
+  width: 30vw;
+  background-color: transparent;
+
+}
+.mqtt-icon {
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
+}
+.sensor-box {
+  display: flex;
+  align-items: center;
+  padding: 25px;
+  height: 0px;
+  width: 75%;
+  position: fixed;
+  top: 38%;
+  left: 3%;
+  background-color:#FFCCCC;
+  border: 1px solid #ccc;
+  border-radius: 9px;
+  text-align: center;
+}@font-face {
+  font-family: "iconfont"; /* Project id 4543894 */
+  src: url('//at.alicdn.com/t/c/font_4543894_qosywm1uf8d.woff2?t=1715598687438') format('woff2'),
+       url('//at.alicdn.com/t/c/font_4543894_qosywm1uf8d.woff?t=1715598687438') format('woff'),
+       url('//at.alicdn.com/t/c/font_4543894_qosywm1uf8d.ttf?t=1715598687438') format('truetype');
+}
+
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 50px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin-left: 55px;
+}
+
+.icon-duoyun:before {
+  content: "\e600";
+  font-size: 70px;
+  color: rgb(0, 195, 255);
+}
+
+.icon-shidu:before {
+  content: "\e60f";
+  color: rgb(42, 179, 179);
+}
+
+.icon-shangjiantou:before {
+  content: "\e61e";
+}
+
+.icon-xiajiantou:before {
+  content: "\e61c";
+}
+
+.icon-wenduji:before {
+content: "\e66c";
+ color:rgb(0, 195, 255);
+}
+
+.icon-juli:before {
+  content: "\e622";
+  color: rgb(224, 224, 53);
+}
+
+.icon-guangzhaoqiangdu:before {
+  content: "\ea32";
+  font-size: 50px;
+  color: red;
+}
+
+.icon-a-beehoneybeeapisapidae:before {
+  content: "\e60e";
+  font-size: 50px;
+}
+
+.flex-container{
+  display: flex;
+  justify-content: flex-start;
+  width: 400px;
+  height:250px;
+  background-color:   #b3ffb3;
+  border: 1px solid #ccc;
+}
+.flex-item{
+  background-color:black;
+  width: 100px;
+  height: 100px;
+  margin:20px;
+}
+.button-box{
+  margin: 5px;
+  display: flex;
+  justify-content: space-around;
+
+}
+.sub-box{
+  margin-left:5px;
+
+}

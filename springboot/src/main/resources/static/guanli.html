@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>管理系统</title>
+  <script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #e8f5e9;
+      margin: 0;
+      padding: 0;
+    }
+    .content-left {
+      border: 2px solid #4caf50;
+      border-radius: 10px;
+      padding: 20px;
+      width: 250px;
+      height: 700px;
+      top: 20%;
+      left:5%;
+      position: absolute;
+      background-color: #ffffff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .view1, .view2, .view3 {
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin: 20px auto;
+      width: 80%;
+      max-width: 900px;
+    }
+    .view1 {
+      height: 130%;
+      left: 30%;
+      top: 15%;
+      position: absolute;
+    }
+    .view2 {
+      height: 150%;
+      right: 5%;
+      top: 15%;
+      position: absolute;
+    }
+    .view3 {
+      border: 2px solid #4caf50;
+      height: 30%;
+      right: 0%;
+      top: 37%;
+      position: absolute;
+    }
+    .active {
+      font-family: 'STKaiti';
+      font-size: 30px;
+      color: #4caf50;
+    }
+    li {
+      padding: 12px;
+      list-style: none;
+    }
+    img {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    .wd {
+      font-size: 20px;
+      right: 4%;
+      position: absolute;
+      color: black;
+    }
+    .head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #4caf50;
+      border-radius: 10px;
+      padding: 20px;
+      position: absolute;
+      width: 95%;
+      height: 60px;
+      right: 1%;
+      color: white;
+    }
+    .title {
+      font-size: 30px;
+      color: white;
+    }
+    .option_list {
+      padding: 0;
+      margin: 0;
+    }
+    .option_list li {
+      margin: 10px 0;
+    }
+    .option_list li a {
+      text-decoration: none;
+      font-family: 'STKaiti';
+      font-size: 20px;
+      color: #4caf50;
+      display: flex;
+      align-items: center;
+    }
+    .option_list li a:hover {
+      color: #45a049;
+    }
+    .option_list li.active a {
+      background-color: #e8f5e9;
+      padding: 10px;
+      border-radius: 5px;
+    }
+    .option_list li a img {
+      margin-right: 10px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    th, td {
+      text-align: center;
+      padding: 10px 0;
+      border: 2px solid #e8f5e9;
+    }
+    th {
+      background-color: #4caf50;
+      color: white;
+      font-size: 20px;
+    }
+    td {
+      background-color: #f1f8e9;
+      color: #333;
+    }
+    .bt1 {
+      border: none;
+      border-radius: 10px;
+      width: 200px;
+      height: 40px;
+      background-color: #4caf50;
+      color: white;
+      font-family: 'STHupo';
+      font-size: 15px;
+      cursor: pointer;
+      margin: 10px 0;
+    }
+    .bt1:hover {
+      background-color: #45a049;
+    }
+    .tishi {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      padding: 20px;
+      background-color: #f1f8e9;
+      border: 2px solid #4caf50;
+      margin-bottom: 20px;
+    }
+    .all {
+      padding: 20px;
+    }
+    .addform {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: absolute;
+      width: 30%;
+      height: 30%;
+      top: 50%;
+      left: 10%;
+      border: 2px solid #4caf50;
+      border-radius: 10px;
+      background-color: #ffffff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      font-family: NSimSun;
+    }
+    .addform input {
+      margin: 10px 0;
+      padding: 5px;
+      width: 45%;
+      border: 1px solid #4caf50;
+      border-radius: 5px;
+    }
+    .addform button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #4caf50;
+      border: none;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 40%;
+    }
+    .addform button:hover {
+      background-color: #45a049;
+    }
+    .search-container {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .search-container input {
+      padding: 10px;
+      width: 80%;
+      border: 1px solid #4caf50;
+      border-radius: 5px;
+    }
+    .search-container button {
+      padding: 10px 20px;
+      background-color: #4caf50;
+      border: none;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .search-container button:hover {
+      background-color: #45a049;
+    }
+
+    .addform1 {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: absolute;
+      width: 30%;
+      height: auto;
+      top: 50%;
+      right: 10%;
+      border: 2px solid #4caf50;
+      border-radius: 10px;
+      background-color: #ffffff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      font-family: NSimSun;
+    }
+    .addform2 {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: absolute;
+      width: 30%;
+      height: auto;
+      top: 73%;
+      left: 10%;
+      border: 2px solid #4caf50;
+      border-radius: 10px;
+      background-color: #ffffff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      font-family: NSimSun;
+    }
+
+  </style>
+</head>
+<body>
+<header class="head">
+  <h1 class="title">管理系统</h1>
+  <a class="wd" href="my.html">退出</a>
+</header>
+<div class="content-left">
+  <div class="user_menu_con fl">
+    <ul class="option_list">
+      <li class="active"><a href="#fengxiang" onclick='fengxiang()' target="main_frame"> <img src="images/蜂箱管理.png">蜂箱管理</a></li>
+      <li class="active" ><a href="#liebiao" onclick='liebiao()' target="main_frame"> <img src="images/用户.png">用户列表</a></li>
+      <li class="active"><a href="#xinxi" onclick='xinxi()' target="main_frame"> <img src="images/信息统计.png">信息统计</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="view1" id="liebiao">
+  <button class="bt1" type="submit" onclick='toggleFormVisibility2()'>添加用户</button>
+  <table border="2px"  id="table2"></table>
+  <div class="addform2">
+    <form>
+      用户id:<input type="text" id="id2" ><br>
+      头像:<input type="text" id="pictureUrl"><br>
+      姓名:<input type="text" id="username"><br>
+      姓别:<input type="text" id="sex"><br>
+      电话:<input type="text" id="phone"><br>
+      邮箱:<input type="text" id="email"><br>
+      个性签名:<input type="text" id="signature"><br>
+      密码:<input type="text" id="password"><br>
+      权限:<input type="text" id="quanxian">
+    </form>
+    <button onclick="addUser()">保存</button>
+  </div>
+</div>
+<div class="view2" id="fengxiang">
+  <div class="addform" style="display: none;">
+    <form>
+      设备编号:<input type="text" id="id"><br>
+      设备名称:<input type="text" id="name"><br>
+      管理员:<input type="text" id="manager"><br>
+      创建日期:<input type="text" id="date"><br>
+      运行区域:<input type="text" id="address"><br>
+      设备状态:<input type="text" id="state"><br>
+      报警次数:<input type="text" id="alarm"><br>
+    </form>
+    <button onclick="addFengxiang()">保存</button>
+  </div>
+  <button class="bt1" type="submit" onclick='toggleFormVisibility()'>添加蜂箱</button>
+  <div class="content_table">
+    <table border="2px" id="table1"></table>
+  </div>
+<!--  <div class="addform1">-->
+<!--    <form>-->
+<!--      设备编号:&nbsp&nbsp&nbsp&nbsp<input type="text" id="id1"><br>-->
+<!--      设备名称:<input type="text" id="name1"><br>-->
+<!--      设备管理员:<input type="text" id="manager1"><br>-->
+<!--      运行区域:<input type="text" id="address1"><br>-->
+<!--      设备状态:<input type="text" id="state1">-->
+<!--    </form>-->
+<!--    <button onclick="updateFengxiang()">修改</button>-->
+<!--  </div>-->
+</div>
+<!--查询-->
+<div class="view1" id="xinxi">
+  <div class="tishi">
+    <text>您可以通过ID编号查询对应的用户以及蜂箱信息</text>
+  </div>
+  <div class="all">
+    <input type="text" id="search-input" placeholder="Search...">
+    <button type="submit" onclick='searchId()'>Search</button>
+    <table border="2px" id="table3"></table>
+
+    <input type="text" id="search-input1" placeholder="Search...">
+    <button type="submit" onclick='searchUser()'>Search</button>
+    <table border="2px" id="table4"></table>
+  </div>
+</div>
+
+<script>
+  $(function(){
+    $.get(
+            "/selectFengxiang",
+            function (data, text, XMLHttpRequest){
+              var title = "<th>设备编号</th><th>设备名称</th><th>设备管理员</th><th>创建日期</th><th>运行区域</th><th>设备状态</th><th>报警次数</th><th>是否共享</th><th>修改设备</th>";
+              $("#table1").append(title);
+              for(var i=0; i<data.length; i++){
+                var fengxiang = {
+                  id: data[i].id,
+                  name: data[i].name,
+                  manager: data[i].manager,
+                  date: data[i].date,
+                  address: data[i].address,
+                  state: data[i].state,
+                  alarm: data[i].alarm,
+                  share: data[i].share,
+                  xiugai: data[i].xiugai,
+                };
+                var stateColor = data[i].state === "设备异常" ? "red" : "black";
+                var tr = "<tr>" +
+                        "<td>" + data[i].id + "</td>" +
+                        "<td>" + data[i].name + "</td>" +
+                        "<td>" + data[i].manager + "</td>" +
+                        "<td>" + data[i].date + "</td>" +
+                        "<td>" + data[i].address + "</td>" +
+                        "<td style='color: " + stateColor + ";'>" + data[i].state + "</td>" +
+                        "<td>" + data[i].alarm + "</td>" +
+                        "<td><img src='images/网络共享.png' class='share-icon'></td>" +
+                        "<td><button onclick='updateFengxiang(" + JSON.stringify(fengxiang) + ")'>修改</button>" +
+                        "<button onclick='deleteFengxiang(" + JSON.stringify(fengxiang) + ")'>删除</button></td>" +
+                        "</tr>";
+                $("#table1").append(tr);
+              }
+            }
+    );
+
+    $.get(
+            "/selectUser",
+            function (data, text, XMLHttpRequest){
+              var title = "<th>用户id</th><th>头像</th><th>姓名</th><th>性别</th><th>电话</th><th>邮箱</th><th>个性签名</th><th>密码</th><th>操作</th>";
+              $("#table2").append(title);
+              for(var i=0; i<data.length; i++){
+                var user = {
+                  id: data[i].id,
+                  pictureUrl: data[i].pictureUrl,
+                  username: data[i].username,
+                  sex: data[i].sex,
+                  phone: data[i].phone,
+                  email: data[i].email,
+                  signature: data[i].signature,
+                  password: data[i].password,
+                };
+                var tr = "<tr>" +
+                        "<td>" + data[i].id + "</td>" +
+                        "<td><img src=" + data[i].pictureUrl + "></td>" +
+                        "<td>" + data[i].username + "</td>" +
+                        "<td>" + data[i].sex + "</td>" +
+                        "<td>" + data[i].phone + "</td>" +
+                        "<td>" + data[i].email + "</td>" +
+                        "<td>" + data[i].signature + "</td>" +
+                        "<td>" + data[i].password + "</td>" +
+                        "<td><button onclick='deleteUser(" + JSON.stringify(user) + ")'>删除</button>" +
+                        "<button onclick='updateUser(" + JSON.stringify(user) + ")'>修改</button></td>" +
+                        "</tr>";
+                $("#table2").append(tr);
+              }
+            }
+    );
+
+    function initializePage() {
+      document.getElementById("liebiao").style.display = "none";
+      document.getElementById("xinxi").style.display = "none";
+      document.getElementById("fengxiang").style.display = "block";
+    }
+
+    initializePage();
+
+    //蜂箱管理修改界面，展示数据
+    var fengxiang = JSON.parse(sessionStorage.getItem("fengxiang"))
+    $("#id1").val(fengxiang.id)
+    $("#name1").val(fengxiang.name)
+    $("#manager1").val(fengxiang.manager)
+    $("#address1").val(fengxiang.address)
+    $("#state1").val(fengxiang.state)
+
+
+
+    var user=JSON.parse(sessionStorage.getItem("user"))
+    //添加界面，展示数据
+    $("#id").val(user.id)
+    $("#pictureUrl").val(user.pictureUrl)
+    $("#username").val(user.username)
+    $("#sex").val(user.sex)
+    $("#phone").val(user.phone)
+    $("#email").val(user.email)
+    $("#signature").val(user.signature)
+    $("#password").val(user.password)
+    $("#quanxian").val(user.quanxian)
+
+  });
+
+  function deleteUser(user) {
+    var user_new = {
+      id: user.id,
+      username: user.username,
+      password: user.password,
+      pictureUrl: user.pictureUrl
+    };
+    $.post("/deleteUser", user_new, function (data, text, XMLHttpRequest){
+      alert("删除用户成功");
+      var user = JSON.parse(sessionStorage.getItem("user"));
+      if (user.username !== user_new.username) {
+        sessionStorage.setItem("username", user_new.username);
+      }
+    });
+  }
+
+  function updateUser(user) {
+    sessionStorage.setItem("user", JSON.stringify(user));
+    window.location.href = "/change.html";
+  }
+
+
+
+
+  function liebiao() {
+    document.getElementById("liebiao").style.display = "block";
+    document.getElementById("fengxiang").style.display = "none";
+    document.getElementById("xinxi").style.display = "none";
+  }
+
+  function fengxiang() {
+    document.getElementById("liebiao").style.display = "none";
+    document.getElementById("fengxiang").style.display = "block";
+    document.getElementById("xinxi").style.display = "none";
+  }
+
+  function xinxi() {
+    document.getElementById("liebiao").style.display = "none";
+    document.getElementById("fengxiang").style.display = "none";
+    document.getElementById("xinxi").style.display = "block";
+  }
+
+  function updateFengxiang(fengxiang) {
+      sessionStorage.setItem("fengxiang", JSON.stringify(fengxiang));
+      window.location.href = "/fxchange.html";
+  }
+
+  function deleteFengxiang(fengxiang) {
+    var user_new = {
+      id: fengxiang.id,
+      name: fengxiang.name,
+      manager: fengxiang.manager,
+      date: fengxiang.date,
+      address: fengxiang.address,
+      state: fengxiang.state,
+      alarm: fengxiang.alarm,
+      share: fengxiang.share,
+      xiugai: fengxiang.xiugai
+    };
+    $.post("/deleteFengxiang", user_new, function (data, text, XMLHttpRequest){
+      alert("删除蜂箱成功");
+      var fengxiang = JSON.parse(sessionStorage.getItem("fengxiang"));
+      if (fengxiang.name !== user_new.name) {
+        sessionStorage.setItem("name", user_new.name);
+      }
+      location.reload();
+    });
+  }
+
+  // function addFengxiang(fengxiang) {
+  //     sessionStorage.setItem("fengxiang", JSON.stringify(fengxiang));
+  //     window.location.href = "/addFengxiang.html";
+  // }
+
+  $(document).ready(function() {
+    $("#table1").on("click", "images.share-icon", function() {
+      if ($(this).attr("src") === "images/网络共享.png") {
+        $(this).attr("src", "images/icon-forbid.png");
+      } else {
+        $(this).attr("src", "images/网络共享.png");
+      }
+    });
+  });
+
+  function searchId() {
+    var id = document.getElementById("search-input").value;
+    $.get(
+            "/searchId?id=" + id,
+            function (data, textStatus, XMLHttpRequest) {
+              console.log(data)
+              console.log(data[0])
+              $("#table3").empty(); // 清空表格内容
+              var title = "<tr>" +
+                      "<th>设备编号</th>" +
+                      "<th>设备管理员</th>" +
+                      "<th>设备名称</th>" +
+                      "<th>创建日期</th>" +
+                      "<th>运行区域</th>" +
+                      "<th>设备状态</th>" +
+                      "<th>报警次数</th>" +
+                      "</tr>";
+              $("#table3").append(title);
+              if (data) {
+                var fengxiang = {
+                  id: data[0].id,
+                  manager: data[0].manager,
+                  name: data[0].name,
+                  date: data[0].date,
+                  address: data[0].address,
+                  state: data[0].state,
+                  alarm: data[0].alarm
+                };
+                var tr = "<tr>" +
+                        "<td>" + fengxiang.id + "</td>" +
+                        "<td>" + fengxiang.manager + "</td>" +
+                        "<td>" + fengxiang.name + "</td>" +
+                        "<td>" + fengxiang.date + "</td>" +
+                        "<td>" + fengxiang.address + "</td>" +
+                        "<td style='color: " + (fengxiang.state === "设备异常" ? "red" : "black") + ";'>" + fengxiang.state + "</td>" +
+                        "<td>" + fengxiang.alarm + "</td>" +
+                        "</tr>";
+                $("#table3").append(tr);
+              } else {
+                alert("未找到对应的信息。");
+              }
+            }
+    ).fail(function() {
+      alert("请求失败，请检查服务器是否启动以及URL是否正确。");
+    });
+  }
+  function searchUser() {
+    var id = document.getElementById("search-input1").value;
+    $.get(
+            "/searchUser?id=" + id,
+            function (data, textStatus, XMLHttpRequest) {
+              console.log(data)
+              console.log(data[0])
+              $("#table4").empty(); // 清空表格内容
+              var title = "<tr>" +
+                      "<th>"+"用户id"+"</th>"+
+                      "<th>"+"头像"+"</th>"+
+                      "<th>"+"姓名"+"</th>"+
+                      "<th>"+"权限"+"</th>"+
+                      "<th>"+"性别"+"</th>"+
+                      "<th>"+"电话"+"</th>"+
+                      "<th>"+"邮箱"+"</th>"+
+                      "<th>"+"个性签名"+"</th>"+
+                      "<th>"+"密码"+"</th>"+
+                      "</tr>";
+
+              $("#table4").append(title);
+
+              if (data) {
+                var user = {
+                  id: data[0].id,
+                  pictureUrl: data[0].pictureUrl,
+                  username: data[0].username,
+                  quanxian: data[0].quanxian,
+                  sex: data[0].sex,
+                  phone: data[0].phone,
+                  email: data[0].email,
+                  signature: data[0].signature,
+                  password: data[0].password,
+                };
+                var tr="<tr>"+
+                        "<td>"+user.id+"</td>"+
+                        "<td>"+
+                        "<img src="+user.pictureUrl+">"+
+                        "</td>"+
+                        "<td>"+user.username+"</td>"+
+                        "<td>"+user.quanxian+"</td>"+
+                        "<td>"+user.sex+"</td>"+
+                        "<td>"+user.phone+"</td>"+
+                        "<td>"+user.email+"</td>"+
+                        "<td>"+user.signature+"</td>"+
+                        "<td>"+user.password+"</td>"
+                        +"</tr>"
+                $("#table4").append(tr);
+              } else {
+                alert("未找到对应的信息。");
+              }
+            }
+    );
+  }
+
+  function  addFengxiang(){
+    var user_new ={
+      id: $("#id").val(),
+      name: $("#name").val(),
+      manager:$("#manager").val(),
+      date:$("#date").val(),
+      address:$("#address").val(),
+      state:$("#state").val(),
+      alarm:$("#alarm").val(),
+
+    }
+    $.post(
+            "/addFengxiang",
+            user_new,
+            function (data, text, XMLHttpRequest){
+              alert("添加蜂箱成功")
+              var fengxiang=JSON.parse(sessionStorage.getItem("fengxiang"))
+              if(fengxiang.name!=$("#name").val()){
+                sessionStorage.setItem("name",$("#name").val())
+
+              }
+              window.location.href="/guanli.html"
+            }
+    )
+  }
+
+  // function  updateFengxiang(){
+  //   var user_new ={
+  //     id: $("#id1").val(),
+  //     name:$("#name1").val(),
+  //     manager:$("#manager1").val(),
+  //     address: $("#address1").val(),
+  //     state: $("#state1").val()
+  //   }
+  //   $.post(
+  //           "/updateFengxiang",
+  //           user_new,
+  //           function (data, text, XMLHttpRequest){
+  //             alert("修改成功")
+  //             var fengxiang=JSON.parse(sessionStorage.getItem("fengxiang"))
+  //             if(fengxiang.name!=$("#name1").val()){
+  //               sessionStorage.setItem("name",$("#name1").val())
+  //             }
+  //             window.location.href="/guanli.html"
+  //           }
+  //   )
+  // }
+
+  function toggleFormVisibility() {
+    var form = document.querySelector('.addform');
+    if (form.style.display === 'none') {
+      form.style.display = 'block';
+    } else {
+      form.style.display = 'none';
+    }
+  }
+  // function toggleFormVisibility1() {
+  //   var form = document.querySelector('.addform1');
+  //   if (form.style.display === 'none') {
+  //     form.style.display = 'block';
+  //   } else {
+  //     form.style.display = 'none';
+  //   }
+  // }
+  function toggleFormVisibility2() {
+    var form = document.querySelector('.addform2');
+    if (form.style.display === 'none') {
+      form.style.display = 'block';
+    } else {
+      form.style.display = 'none';
+    }
+  }
+
+  // function toggleFormAndUpdateFengxiang1() {
+  //     toggleFormVisibility1();
+  //     updateFengxiang(fengxiang);
+  // }
+  function  addUser(){
+    var user_new ={
+      id: $("#id2").val(),
+      pictureUrl: $("#pictureUrl").val(),
+      username:$("#username").val(),
+      sex:$("#sex").val(),
+      phone:$("#phone").val(),
+      email:$("#email").val(),
+      signature:$("#signature").val(),
+      password: $("#password").val(),
+      quanxian:$("#quanxian").val()
+    }
+    $.post(
+            "/addUser",
+            user_new,
+            function (data, text, XMLHttpRequest){
+              alert("添加用户成功")
+              var user=JSON.parse(sessionStorage.getItem("user"))
+              if(user.username!=$("#username").val()){
+                sessionStorage.setItem("username",$("#username").val())
+              }
+              window.location.href="/guanli.html"
+            }
+    )
+  }
+</script>
+</body>
+</html>

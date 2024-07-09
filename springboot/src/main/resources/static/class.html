@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>毒蜂种类介绍</title>
+  <script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.staticfile.net/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://cdn.staticfile.net/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdn.staticfile.net/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+  <style>
+    body {
+      background-color: black;
+      font-family: Arial, sans-serif;
+    }
+    .content {
+      padding: 20px;
+      background-color: #fff;
+      margin: 20px auto;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      max-width: 800px;
+      position: relative;
+      z-index: 2; /* 确保内容在流星背景上层 */
+    }
+    .section-title {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #333;
+      text-align: center;
+    }
+    .section {
+      margin-bottom: 40px;
+    }
+    .bee-image {
+      width: 50%;
+      left: 25%;
+      height: auto;
+      border-radius: 8px;
+      position: relative;
+    }
+    .bee-description {
+      font-size: 16px;
+      margin-top: 10px;
+      color: #666;
+      text-align: justify;
+    }
+    .footer {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+      position: fixed;
+      width: 100%;
+      bottom: 0;
+      z-index: 2; /* 确保页脚在流星背景上层 */
+    }
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background-color: white;
+      border-radius: 50%;
+      box-shadow: 0 0 6px white;
+      animation: star-animation 5s linear infinite;
+    }
+    @keyframes star-animation {
+      0% {
+        transform: translateY(0) translateX(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) translateX(100vw);
+        opacity: 0;
+      }
+    }
+  </style>
+  <script>
+    function createStars() {
+      for (let i = 0; i < 100; i++) {  // 增加星星的数量到100
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.top = `${Math.random() * 100}vh`;
+        star.style.left = `${Math.random() * 100}vw`;
+        star.style.animationDuration = `${Math.random() * 5 + 5}s`;  // 设置动画时长为5到10秒之间
+        star.style.animationDelay = `${Math.random() * 5}s`;
+        document.body.appendChild(star);
+      }
+    }
+
+    window.onload = function() {
+      createStars(); // Create stars for the background
+    }
+  </script>
+</head>
+<body>
+<div class="content">
+  <div class="section-title">毒蜂种类介绍</div>
+  <div class="section">
+    <div class="section-title">非洲蜜蜂（杀人蜂）</div>
+    <img src="images/kill.jpg" alt="非洲蜜蜂" class="bee-image">
+    <p class="bee-description">非洲蜜蜂，也被称为“杀人蜂”，是非洲蜜蜂与欧洲蜜蜂的杂交品种。它们以攻击性强著称，主要分布在美洲。</p>
+  </div>
+  <div class="section">
+    <div class="section-title">亚洲巨型蜂</div>
+    <img src="images/juxing.jpg" alt="亚洲巨型蜂" class="bee-image">
+    <p class="bee-description">亚洲巨型蜂，也被称为“杀人蜂”，是世界上最大的胡蜂。它们原产于东亚、南亚和俄罗斯远东地区，以毒性强和攻击性高闻名。</p>
+  </div>
+  <div class="section">
+    <div class="section-title">欧洲大黄蜂</div>
+    <img src="images/big.png" alt="欧洲大黄蜂" class="bee-image">
+    <p class="bee-description">欧洲大黄蜂是欧洲和北美洲最大的黄蜂。与其他黄蜂不同，欧洲大黄蜂不仅在白天捕猎，也在夜间活动。它们的攻击性比其他黄蜂要低。</p>
+  </div>
+  <div class="section">
+    <div class="section-title">黄蜂</div>
+    <img src="images/yellow.webp" alt="黄蜂" class="bee-image">
+    <p class="bee-description">黄蜂因其独特的黑黄色外观而闻名。特别是在夏末和秋初，它们变得非常具有攻击性。黄蜂在北美洲很常见，常被误认为是蜜蜂。</p>
+  </div>
+</div>
+<div class="footer">
+  © 2023 毒蜂信息. 版权所有.
+</div>
+</body>
+</html>

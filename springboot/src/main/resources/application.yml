@@ -1,0 +1,6 @@
+mqtt:
+  url: 118.24.230.64
+  username: mqtt
+  password: 1883
+  clientId: dd444f9d-2377-4fd7-a739-b839eaca833b
+  topic: esp32_js

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.mapper.MqttMapper" >
+    <resultMap id="BaseResultMap" type="com.demo.javaBean.Mqtt" >
+        <id column="mqttId" property="mqttId" jdbcType="VARCHAR" />
+        <result column="temp" property="temp" jdbcType="VARCHAR" />
+        <result column="humidity" property="humidity" jdbcType="VARCHAR" />
+        <result column="light" property="light" jdbcType="VARCHAR" />
+        <result column="alarm" property="alarm" jdbcType="VARCHAR" />
+        <result column="time" property="time" jdbcType="VARCHAR" />
+
+    </resultMap>
+
+    <select id="selectMqttByMovieId" parameterType="String" resultType="com.demo.javaBean.Mqtt">
+    SELECT * FROM mqtt WHERE movieId = #{movieid}
+    </select>
+    <select id="selectMqtt" resultType="com.demo.javaBean.Mqtt">
+    select * from mqtt
+    </select>
+
+
+</mapper>

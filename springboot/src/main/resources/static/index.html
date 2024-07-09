@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Venomous Bee Information</title>
+    <script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.staticfile.net/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.net/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.net/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<style>
+    body {
+        background-color: #e5ffe5;
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    .nav {
+        background-color: rgba(0, 0, 0, 0.8);
+        width: 100%;
+        position: fixed;
+        top: 0;
+        z-index: 1000;
+        padding: 10px 0;
+    }
+    .nav-pills > li > a {
+        color: #ffffff;
+        padding: 10px 20px;
+    }
+    .nav-pills > li > a:hover {
+        background-color: #00796b;
+        color: #ffffff;
+    }
+    .dropdown-menu {
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+    .dropdown-menu > li > a {
+        color: #ffffff;
+    }
+    .dropdown-menu > li > a:hover {
+        background-color: #00796b;
+        color: #ffffff;
+    }
+    .hero {
+        background-image: url("images/backgroud3.webp");
+        background-size: cover;
+        background-position: center;
+        height: 600px;
+        padding: 60px 0;
+        text-align: center;
+        color: #ffffff;
+        position: relative;
+    }
+    .hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5); /* 半透明黑色渐变 */
+        z-index: 1;
+    }
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+    .hero h1 {
+        font-size: 48px;
+        margin-bottom: 20px;
+        animation: fadeInDown 1s ease-in-out;
+    }
+    .hero p {
+        font-size: 24px;
+        margin-bottom: 40px;
+        animation: fadeInUp 1s ease-in-out;
+    }
+    .search-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+    .search-box input {
+        padding: 10px 20px;
+        border-radius: 4px;
+        border: none;
+        width: 300px;
+    }
+    .search-box button {
+        padding: 10px 20px;
+        border-radius: 4px;
+        border: none;
+        background-color: #00796b;
+        color: #ffffff;
+        cursor: pointer;
+        margin-left: 10px;
+        transition: background-color 0.3s ease;
+    }
+    .search-box button:hover {
+        background-color: #005f56;
+    }
+    @keyframes fadeInDown {
+        0% {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    @keyframes fadeInUp {
+        0% {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    .section {
+        text-align: center;
+        padding: 20px;
+    }
+
+    .section img {
+        width: 100%;
+        height: auto;
+    }
+
+    .section-title {
+        font-size: 24px;
+        margin: 10px 0;
+    }
+
+    .section-content {
+        font-size: 16px;
+    }
+
+    .container {
+        width: 100%;
+        height: 200px;
+        top: 80%;
+        position: absolute;
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+
+    .a3 {
+        display: block;
+        width: 310px;
+        height: 285px;
+    }
+
+    .box1 {
+        width: 309px;
+        background-color: #f9f9f9;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+
+    .box1:hover {
+        box-shadow: 0 16px 32px 0 rgba(48, 55, 66, 0.15);
+        /* 鼠标悬浮时盒子出现的阴影 */
+        transform: scale(1.1);
+        /* 鼠标悬浮时盒子变大 */
+    }
+
+    div.box {
+        width: 580px;
+        height: 350px;
+        border: 1px solid;
+        color: #FFFFFF;
+        position: absolute;
+        left: 46.5%;
+        /* 将元素左边界放在页面水平中心 */
+        top: 88%;
+        transform: translateX(-50%);
+        /* 将元素水平居中对齐 */
+        margin: 0 auto;
+        /* 水平居中 */
+        display: flex;
+        justify-content: center;
+        /* 内容水平居中 */
+        align-items: center;
+        /* 内容垂直居中 */
+    }
+
+    .box .slider-item {
+        margin: 0;
+    }
+
+    .box img {
+        width: 590px;
+        height: 350px;
+    }
+
+    .box {
+        width: 600px;
+        height: 350px;
+        margin: 100px auto;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .box .slider {
+        width: 3500px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transition: transform 0.5s ease;
+        /* 添加过渡效果 */
+    }
+
+    .box ul li {
+        float: left;
+    }
+
+    .circle {
+        position: absolute;
+        height: 20px;
+        left: 280px;
+        bottom: 10px;
+    }
+
+    .circle li {
+        width: 16px;
+        height: 16px;
+        background-color: #fff;
+        border-radius: 8px;
+        line-height: 16px;
+        text-align: center;
+        margin-left: 0px;
+        cursor: pointer;
+        float: left;
+    }
+
+    .arrow {
+        position: absolute;
+        top: 50%;
+        width: 30px;
+        height: 30px;
+        background: rgba(0, 0, 0, .5);
+        color: #fff;
+        font-size: 24px;
+        text-align: center;
+        line-height: 30px;
+        display: none;
+    }
+
+    .arrow:hover {
+        background: rgba(0, 0, 0, .3);
+    }
+
+    .prev {
+        left: 10px;
+    }
+
+    .next {
+        right: 10px;
+    }
+
+    .circle .current {
+        background-color: forestgreen;
+        color: #fff;
+    }
+
+    div ul {
+        background-color: white;
+        border: 2px solid green;
+        border-radius: 9px;
+        transition: all 0.3s;
+        /* 上浮这个过程需要的时间 */
+        top: 38%;
+    }
+
+    div ul:hover {
+        box-shadow: 0 16px 32px 0 rgba(48, 55, 66, 0.15);
+        /* 鼠标悬浮时盒子出现的阴影 */
+        transform: translate(0, -10px);
+        /* 鼠标悬浮时盒子上移10px */
+    }
+
+    .personal-mybuluo-head {
+        width: 100%;
+        height: 14px;
+        position: absolute;
+        margin-top: 7%;
+    }
+
+    .personal-mybuluo-wording {
+        position: absolute;
+        top: 0;
+        z-index: 2;
+        left: 50%;
+        background-color: transparent;
+        color: green;
+        text-align: center;
+        -webkit-transform: translate(-50%, 0);
+        transform: translate(-50%, 0);
+        padding: 0 10px;
+    }
+
+    .personal-border {
+        position: absolute;
+        bottom: 30%;
+        /* 距离底部30% */
+        left: 0;
+        width: 100%;
+        height: 14px;
+        z-index: 1;
+    }
+
+    .jmu-border-1px {
+        position: relative;
+    }
+
+    .jmu-border-1px.border-bottom:after {
+        border-bottom: 1px solid green;
+    }
+
+    @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+        .jmu-border-1px:after {
+            right: -100%;
+            bottom: -100%;
+            -webkit-transform: scale(0.5);
+        }
+
+        .jmu-border-1px:after {
+            display: block;
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            -webkit-transform-origin: 0 0;
+            -webkit-transform: scale(1);
+            pointer-events: none;
+        }
+    }
+
+    /*咨询报道*/
+    /*清除样式*/
+    body,
+    div,
+    ul,
+    li,
+    h3,
+    a {
+        padding: 0;
+        margin: 0;
+    }
+
+    ul {
+        list-style: none;
+    }
+
+    .column {
+        width: 500px;
+        height: 1100px;
+        margin-top: 30%;
+        margin-right: 10px;
+        left: 10%;
+        border: 1px solid #ccc;
+        position: absolute;
+        background-color: white;
+    }
+
+    .tt {
+        height: 35px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .tt h3 {
+        float: left;
+        height: 35px;
+        line-height: 35px;
+        text-indent: 0.5em;
+        font-family: "微软雅黑";
+        width: 150px;
+        border-bottom: 1px solid #56a3df;
+    }
+
+    .main {
+        font-size: 14px;
+        margin: 0px 5px 0px 5px;
+        top: 2%;
+        position: absolute;
+    }
+
+    .column ul {
+        width: 480px;
+        height: 600px;
+        border-color: transparent;
+        background-color: transparent;
+        list-style: none;
+        display: block;
+        /* 将display属性改为block */
+        padding: 20px;
+        margin-top: 15%;
+        position: absolute;
+    }
+
+    .column ul li {
+        /*margin-top: 10%;*/
+        margin: 10px 0;
+        text-indent: 1em;
+    }
+
+    .column ul li span {
+        margin-top: 5%;
+        display: block;
+        color: #007bff;
+    }
+
+    .column ul li a {
+        margin-top: 8%;
+        display: block;
+    }
+
+    .a1 {
+        margin-top: 100%;
+        position: relative;
+    }
+
+    .a1:hover {
+        text-decoration: underline;
+        color: red;
+    }
+
+    .column ul li a:hover {
+        text-decoration: underline;
+        color: red;
+    }
+
+    .column li a:link,
+    a:visited {
+        text-decoration: none;
+        color: black;
+    }
+
+    /*    科普*/
+    .kepu {
+        width: 500px;
+        height: 1100px;
+        margin-top: 30%;
+        right: 10%;
+        border: 1px solid #ccc;
+        position: absolute;
+        background-color: white;
+    }
+
+    .kepu1 {
+        width: 480px;
+        height: 600px;
+        border-color: transparent;
+        background-color: transparent;
+    }
+
+    .kepu1 h4 {
+        left: 40%;
+        position: relative;
+    }
+
+    .kpContent {
+        display: inline-block;
+        padding: 20px;
+    }
+
+    .kpContent hr {
+        border: none;
+        background-color: #007bff;
+        /* 修改分割线的颜色 */
+        height: 1px;
+    }
+    .footer {
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        padding: 15px;
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+    }
+</style>
+
+<body>
+<ul class="nav nav-pills">
+    <li><a href="#">Home</a></li>
+    <li><a href="video.html">video</a></li>
+    <li><a href="humiture.html">data</a></li>
+    <li><a href="login.html">login</a></li>
+    <li><a href="mqtt.html">mqtt</a></li>
+    <li><a href="my.html">my</a></li>
+    <li><a href="location.html">location</a></li>
+</ul>
+
+<div class="hero">
+    <div class="hero-content">
+        <h1>Venomous Bee Information</h1>
+        <p>All you need to know about venomous bees</p>
+        <div class="search-box">
+            <input type="text" id="search-input" placeholder="Search...">
+            <button onclick="search()">Search</button>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <a class="a3" href="#">
+        <div class="box1 section">
+            <img src="images/divbj5.jpg" alt="Welcome">
+            <div class="section-title">Welcome</div>
+            <div class="section-content">All you need to know about venomous bees.</div>
+        </div>
+    </a>
+    <a class="a3" href="class.html">
+        <div class="box1 section">
+            <img src="images/divbj6.jpg" alt="Home">
+            <div class="section-title">Home</div>
+            <div class="section-content">Learn about the different species and their habitats.</div>
+        </div>
+    </a>
+    <a class="a3" href="#kepu-section">
+        <div class="box1 section">
+            <img src="images/divbj3.jpg" alt="Prevention">
+            <div class="section-title">Prevention</div>
+            <div class="section-content">Research on how to prevent bee stings and stay safe.</div>
+        </div>
+    </a>
+    <a class="a3" href="community.html">
+        <div class="box1 section">
+            <img src="images/divbj4.webp" alt="Community">
+            <div class="section-title">Community</div>
+            <div class="section-content">Join our community to share your experiences and knowledge.</div>
+        </div>
+    </a>
+</div>
+
+<div class="column">
+    <div class="tt">
+        <h3>资讯报道</h3>
+        <a href="" class="img"></a>
+    </div>
+    <div class="main">
+        <ul>
+            <li><span>2023-08-09 12:21江西</span><a href="https://www.thepaper.cn/newsDetail_forward_24167707">警惕！有人被袭休克--></a></li>
+            <li><span>2020-11-04 19:26</span><a href="https://www.thepaper.cn/newsDetail_forward_9848292">多人被马蜂蜇伤送ICU，医生提醒：蜂毒可致命，应及时就医--></a></li>
+            <li><span>2018-10-08 09:03 来源：成都商报</span><a href="https://www.thepaper.cn/newsDetail_forward_2506496">四川上月4人被马蜂蜇伤致死，救援大队最多一天摘60个蜂窝--></a></li>
+            <li><span>2018-04-26 08:27 来源：科技日报</span><a href="http://health.people.com.cn/n1/2018/0426/c14739-29951470.html">野外游玩当心！一只野蜂引发的命案，超敏反应猛于蜂毒--></a></li>
+            <li><span>2016-11-15 07:30:24</span><a href="https://hb.sina.cn/news/2016-11-15/detail-ifxxsmif3036383.d.html">毒蜂入侵湖北高速袭击过往车辆 一货车司机被蜇昏--></a></li>
+        </ul>
+        <a class="a1" href="https://cn.bing.com/search?q=%e6%af%92%e8%9c%82%e8%a2%ad%e5%87%bb%e4%ba%ba%e7%9a%84%e6%8a%a5%e9%81%93%e8%b5%84%e8%ae%af&refig=664ff299153544d8826763b29456b1be&pc=HCTS&FPIG=52DC14606A274B8CA378518D54996E8B&first=5&FORM=PERE">点击查看更多>>></a>
+    </div>
+</div>
+<div class="kepu" id="kepu-section">
+    <div class="tt">
+        <h3>科普知识</h3>
+        <a href="" class="img"></a>
+    </div>
+    <div class="kepu1">
+        <h4>蜇伤可能会致命</h4>
+        <div class="kpContent">
+            &nbsp;&nbsp;&nbsp;&nbsp;蜂类属于膜翅目昆虫，部分品种的蜂的尾部生有蜇刺，可蜇伤人，引起中毒。 我国常见蜇人蜂有两大类：
+            <a style="color: #ff6666" href="https://baike.baidu.com/item/%E8%9C%9C%E8%9C%82/37730">蜜蜂</a>和<a style="color: #ff6666" href="https://baike.baidu.com/item/%E8%83%A1%E8%9C%82/37732">胡蜂</a>。</br>
+            &nbsp;&nbsp;&nbsp;&nbsp;二者均建巢群居，一旦受到惊扰就会倾巢而出。 蜜蜂蜇刺生有倒钩，蜇人后蜇刺脱落，蜜蜂死亡。</br>
+            &nbsp;&nbsp;&nbsp;&nbsp;蜜蜂性情温和，不会主动发起攻击，只有受到威胁时才会殊死一搏。 而胡蜂又称“杀人蜂”，体型较大，性情凶猛，攻击性和毒力较蜜蜂强。 民间常说的马蜂、黄蜂、土蜂、细腰蜂等均为胡蜂，胡蜂蜇刺不易脱落，可反复蜇刺。</br>
+            &nbsp;&nbsp;&nbsp;&nbsp;蜂毒成分复杂，不同蜂种的蜂毒成分大不相同，主要为多肽类、生物胺类和酶类。 蜂蜇伤后，局部皮肤可出现红肿、疼痛、瘙痒，严重的可能化脓和坏死，毒液进入血液循环可引起过敏反应、横纹肌溶解、溶血、肝肾损害、心肌梗死及神经系统损伤等。</br>
+            &nbsp;&nbsp;&nbsp;&nbsp;蜂蜇伤的致死原因主要有二： 其一是过敏反应。 常发生在蜇伤后数分钟到数小时内，表现为全身皮肤瘙痒、荨麻疹、喉头水肿、呼吸困难、心动过速、呕吐、腹泻等，不及时救治会因过敏性休克，呼吸循环衰竭而死亡。
+            其二是多脏器功能衰竭。 蜂毒进入体内引起全身中毒，表现为头痛、恶心、呕吐、胸闷、呼吸困难等，轻者治疗后好转，重者可出现神志不清、烦躁不安、肌肉痉挛、抽搐、昏迷、休克、心脏骤停、呼吸麻痹等，常于数小时或数日内死亡。
+            <hr>
+            <h4>防范知识要牢记</h4>
+            1.远离蜂类，切勿惊扰蜂巢。</br>
+            2.路遇蜂类，小心应对。</br>
+            3.外出时要防患于未然。</br>
+            4.过敏人群应尽量避免蜂蜇伤。</br>
+            <hr>
+            <h4>三步急救法</h4>
+            1.清除蜇刺</br>
+            检查有无蜇刺残留，可用镊子拔出、小针挑拨、胶布粘贴等方法取出蜂刺，有条件的可用吸奶器或拔火罐吸出毒汁。 注意不要挤压患处，以免将蜂毒挤入深层组织，加重中毒。
+            </br>
+            2.清洗伤处</br>
+            蜜蜂的毒液呈酸性，可选择肥皂水、碳酸氢钠等碱性液体冲洗或湿敷伤口。 马蜂的毒液偏碱性，可选择食醋等酸性液体冲洗或湿敷伤口。 尽量判断蜇人的是毛茸茸的小蜜蜂还是凶猛的大胡蜂。 如果实在不清楚蜂种，就用流动清水冲洗伤口。 此外，冰敷伤口可减轻局部不适感。
+            </br>
+            3.及时就医</br>
+            蜂蜇伤致死原因主要是过敏反应和多脏器功能衰竭，所以当被群蜂蜇伤或被单只蜂蜇伤，或出现荨麻疹等过敏症状或全身不适时，应立即就近送医抢救。
+            </br>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    © 2023 毒蜂信息社区. 版权所有.
+</div>
+<script>
+    function search() {
+        const query = document.getElementById('search-input').value.toLowerCase();
+        if (query.includes('community')) {
+            window.location.href = 'community.html';
+        } else if (query.includes('prevention')) {
+            window.location.href = '#kepu-section';
+        } else if (query.includes('home')) {
+            window.location.href = 'class.html';
+        } else {
+            alert('No results found for your search query.');
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>个人中心</title>
+</head>
+<script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
+<!--样式-->
+<style>
+  body{
+    background-color: #e8f5e9;
+    font-family: 'Arial', sans-serif;
+  }
+  .profile-section {
+    margin-bottom: 20px;
+    font-family: 'STKaiti';
+    font-size: 18px;
+  }
+  input{
+    padding: 10px;
+    width: 100%;
+    border: 1px solid #4caf50;
+    border-radius: 5px;
+  }
+  .profile-section label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  .profile-section input[type="text"],
+  .profile-section select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #4caf50;
+    border-radius: 5px;
+  }
+  .profile-section button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #4caf50;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .profile-section button:hover {
+    background-color: #45a049;
+  }
+  .content{
+    margin: 0 auto;
+    width: 80%;
+    max-width: 800px;
+    padding: 20px;
+  }
+  .head{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: linear-gradient(120deg, #4caf50, #81c784);
+    border-radius: 10px;
+    padding: 20px;
+    width: 90%;
+    margin: 20px auto;
+    position: relative;
+  }
+  .view2{
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    margin: 20px auto;
+    width: 80%;
+    max-width: 800px;
+    position: absolute;
+    left:30%;
+  }
+  .view1{
+    border: 2px solid #4caf50;
+    border-radius: 10px;
+    padding: 30px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    margin: 20px auto;
+    width: 80%;
+    max-width: 800px;
+    position: absolute;
+    left:30%;
+  }
+  .wd{
+    font-size: 20px;
+    color: #4caf50;
+    text-align: right;
+    margin-right: 20px;
+  }
+  .conter_con{
+    border: 3px solid #4caf50;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #ffffff;
+    width: 250px;
+    margin: 20px auto;
+    position: absolute;
+  }
+  .active{
+    font-family: 'STKaiti';
+    font-size: 25px;
+    color: #4caf50;
+  }
+  .bt, .bt1{
+    border: none;
+    border-radius: 5px;
+    width: 200px;
+    height: 40px;
+    background-color: #4caf50;
+    color: white;
+    font-family: 'STHupo';
+    font-size: 15px;
+    cursor: pointer;
+  }
+  .bt:hover, .bt1:hover{
+    background-color: #45a049;
+  }
+  .xiahuaxian {
+    border-bottom: 2px solid #4caf50;
+    font-family: 'STHupo';
+    font-size: 20px;
+    color: #333;
+  }
+  td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  li{
+    padding: 12px;
+    list-style-type: none;
+  }
+  th {
+    background-color: #4caf50;
+    color: white;
+    padding: 12px;
+  }
+  img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  .user_center_pic{
+    text-align: center;
+  }
+  .option_list{
+    padding: 0;
+    list-style-type: none;
+    margin: 0;
+  }
+  .option_list li{
+    margin: 10px 0;
+  }
+  .option_list li a{
+    text-decoration: none;
+    font-family: 'STKaiti';
+    font-size: 20px;
+    color: #4caf50;
+  }
+  .option_list li.active {
+    background-color: #e8f5e9;
+  }
+  .option_list li a:hover{
+    color: #45a049;
+  }
+  .top{
+    width: 100%;
+    height: 300px;
+    background-color: #81c784;
+    /*background-image: url('/img/IMG_9552(20240616-013052).jpg');*/
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    position: relative;
+    margin-bottom: 30px;
+  }
+  .top-img{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .title1{
+    font-size: 35px;
+    position: absolute;
+    color: white;
+    top: 20px;
+    left: 20px;
+  }
+  .title2{
+    font-size: 20px;
+    position: absolute;
+    color: white;
+    top: 20px;
+    right: 20px;
+  }
+  .view3{
+    border: 2px solid #4caf50;
+    border-radius: 10px;
+    padding: 30px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    margin: 20px auto;
+    width: 60%;
+    max-width: 1000px;
+    font-family: 'STKaiti';
+    font-size: 20px;
+    position: absolute;
+    left:30%;
+  }
+  p {
+    text-indent: 2em;
+    line-height: 1.6;
+  }
+
+  .user_center_name{
+    top:105%;
+    position: absolute;
+    font-size: 20px;
+    left:65%;
+    color: black;
+    font-family:STHeiti;
+  }
+  .add{
+    top:73%;
+    position: absolute;
+    font-size: 20px;
+    left:45%;
+    color: black;
+    font-family:STHeiti;
+  }
+
+
+
+</style>
+<body>
+<div class="top" >
+  <h1 class="title">Intelligent Bee-eye System</h1>
+  <h1 class="title1">个人中心</h1>
+  <a class="title2" href="login.html"> 退出登录</a>
+  <div class="add">用户昵称：</div>
+  <div class="top-img">
+    <div class="user_center_name"></div>
+    <img1></img1>
+  </div>
+</div>
+
+<div class="view2" id="liebiao">
+<!--  <button class="bt1" type="submit" onclick='addUser()'>添加用户</button>-->
+  <table border="2px"  ></table>
+  <div class="pagination"></div>
+</div>
+<div class="view3" id="guanyu">
+  <p> 智能蜂眼管理系统是基于OpenMV的智能蜂眼环境监测与报警系统,该项目使用Yolov5模型对毒蜂数据集进行训练。在PyCharm中启动Socket服务以监听视频帧，并将其转换为图像进行模型检测。一旦检测到物体，智能蜂箱将启动摄像头进行识别。如果识别为毒蜂，则会触发MQTT指令自动报警，并将实时检测到的视频和报警次数自动传输到开发网页上。该系统同时会统计用户以及蜂箱信息，对信息进行管理整理</p>
+  <p>功能描述:</p>
+  <p>（1）智能精确监测，识别迅速，提升检测响应
+    通过智能精确监测和迅速识别技术的引入，本项目实现了对毒蜂的快速精准定位和实时监控，借助socket服务监听并转化图像，结合OpenMV的图像识别能力，极大地提升了对毒蜂威胁的响应速度，有效减轻了毒蜂带来的潜在威胁。
+  </p>
+  <p>（2）全面环境洞察，数据获取，增加习性认知
+    项目利用DHT11传感器和光敏传感器采集环境数据，全面洞察温湿度、光照生态数据，推测毒蜂生态习性，为我们深入了解毒蜂的生活习性提供了丰富的数据支持。</p>
+
+  <p>（3）安全预警机制，智能报警，保障群众安全
+    安全预警机制的引入使得本项目具备智能报警功能，有效保障了群众的安全。当OpenMV检测到毒蜂时，将触发MQTT指令自动报警，在危险临近时启动报警系统，及时提醒附近群众毒蜂的存在，降低了毒蜂攻击事件的发生率，保障社会公共安全。
+  </p>
+  <p>
+    （4）精准定位技术，获取地图，智能查找蜂箱
+    项目通过Air820 4G模块智能定位，可以具体定位查看蜂箱的具体位置以及经纬度信息，用于方便用户及时发现危险和管理者管理。</p>
+</div>
+
+<!--<header class="head">-->
+<!--  <h1 class="title">智能蜂眼系统</h1>-->
+<!--  <a class="wd" href="login.html">退出</a>-->
+
+<!--</header>-->
+<div class="conter_con">
+  <div class="user_menu_con fl">
+    <!--               <div class="user_center_pic">-->
+    <!--                   <img>-->
+    <!--               </div>-->
+    <!--               <div class="user_center_name"></div>-->
+
+    <ul class="option_list">
+      <li class="active" onclick="setActive(this)"><a href="#ziliao" onclick='ziliao()' target="main_frame">基本资料</a></li>
+      <li class="active" onclick="setActive(this); liebiao(); user();"><a href='#liebiao' target="main_frame">用户列表</a></li>
+      <li class="active" onclick="setActive(this); user();"><a href="guanli.html" target="m>ain_frame">管理系统</a></li>
+      <li class="active" onclick="setActive(this)"><a href="#xiugai" target="main_frame">找回密码</a></li>
+      <li class="active" onclick="setActive(this)"><a href="#guanyu" onclick='guanyu()' target="m>ain_frame">关于我们</a></li>
+      <li class="active" onclick="setActive(this)"><a href="login.html" onclick='qiehuan()' target="m>ain_frame">切换账号</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="view1" id="ziliao">
+  <main>
+    <section class="profile-section">
+      <p class="xiahuaxian">基本资料</p>
+      <div class="content">
+        <label>用户昵称:</label>
+        <input class="nicheng">
+        <section class="profile-section">
+          <label>性别:</label>
+          <select class="xingbie">
+            <option class="xingbie" value="性别">男</option>
+            <option class="xingbie" value="女">女</option>
+          </select>
+        </section>
+        <section class="profile-section">
+          <label>个性签名:</label>
+          <input class="qianming">
+        </section>
+        <section class="profile-section">
+          <label>手机号码:</label>
+          <input class="shouji">
+        </section>
+        <section class="profile-section">
+          <label>QQ邮箱:</label>
+          <input class="youxiang">
+        </section>
+      </div>
+      <button class="bt" type="submit" onclick="saveUser()">保存</button>
+    </section>
+  </main>
+</div>
+</body>
+
+
+<script>
+  $(function(){
+    // 从sessionStorage中获取用户名
+    var username = sessionStorage.getItem("username");
+    $.get(
+            "/selectUser",
+            { username: username },
+            function (data, text, XMLHttpRequest){
+              var title="<th>"+"用户id"+"</th>"+
+                      "<th>"+"头像"+"</th>"+
+                      "<th>"+"姓名"+"</th>"+
+                      "<th>"+"性别"+"</th>"+
+                      "<th>"+"电话"+"</th>"+
+                      "<th>"+"邮箱"+"</th>"+
+                      "<th>"+"个性签名"+"</th>"+
+                      "<th>"+"密码"+"</th>"+
+                      "<th>"+"操作"+"</th>"
+
+              $("table").append(title)
+              for(var i=0;i<data.length;i++){
+                var user={
+                  id:data[i].id,
+                  pictureUrl:data[i].pictureUrl,
+                  username:data[i].username,
+                  sex:data[i].sex,
+                  phone:data[i].phone,
+                  email:data[i].email,
+                  signature:data[i].signature,
+                  password:data[i].password,
+
+                }
+                var tr="<tr>"+
+                        "<td>"+data[i].id+"</td>"+
+                        "<td>"+
+                        "<img src="+data[i].pictureUrl+">"+
+                        "</td>"+
+                        "<td>"+data[i].username+"</td>"+
+                        "<td>"+data[i].sex+"</td>"+
+                        "<td>"+data[i].phone+"</td>"+
+                        "<td>"+data[i].email+"</td>"+
+                        "<td>"+data[i].signature+"</td>"+
+                        "<td>"+data[i].password+"</td>"+
+                        "<td>"+
+                        "<button onclick='deleteUser("+JSON.stringify(user)+")'>"+"删除"+"</button>"+
+                        "<button onclick='updateUser("+JSON.stringify(user)+")'>"+"修改"+"</button>"+
+                        "</td>"
+                        +"</tr>"
+
+                $("table").append(tr);
+              }
+
+              // 将获取的用户信息展示在对应的输入框中
+              $(".nicheng").val(username); // 从sessionStorage中获取到的用户名设置到输入框中
+              $(".xingbie").val(user.sex); // 设置select标签的value属性为数据库中的性别信息
+              $(".qianming").val(user.signature);
+              $(".shouji").val(user.phone);
+              $(".youxiang").val(user.email);
+
+            }
+    )
+    // 检查sessionStorage中是否存在username
+    var username = sessionStorage.getItem("username");
+    if (username) {
+      // 发送POST请求到后端，获取用户头像URL
+      $.post(
+              "/getUserPicture",
+              { username: username },
+              function(response) {
+                console.log(response)
+                if (response!="") {
+                  var PictureUrl = response;
+                  console.log(PictureUrl)
+                  // 创建img元素并设置头像URL
+                  var img = $("<img>").attr("src", PictureUrl);
+                  var img1 = $("<img>").attr("src", PictureUrl);
+                  // 展示用户头像
+                  $(".user_center_pic").append(img);
+                  $(".top-img").append(img1);
+                } else {
+                  console.log("获取用户头像URL失败");
+                }
+              }
+      );
+
+      // 显示用户名
+      $(".user_center_name").text(username);
+      // $(".nicheng").text(username);
+    } else {
+      console.log("未找到有效的用户名");
+    }
+
+// 初始化函数，显示“基本资料”部分
+    function initializePage() {
+      // 隐藏“用户列表”部分
+      document.getElementById("liebiao").style.display = "none";
+      // 显示“基本资料”部分
+      document.getElementById("ziliao").style.display = "block";
+      document.getElementById("guanyu").style.display = "none";
+    }
+
+    // 页面加载完成时调用初始化函数
+    initializePage();
+
+
+
+  })
+
+  function deleteUser(user){
+    var user_new = {
+      id: user.id,
+      username: user.username,
+      password: user.password,
+      pictureUrl: user.pictureUrl
+    };
+    $.post("/deleteUser", user_new, function (data, text, XMLHttpRequest){
+      alert("删除成功");
+      var user = JSON.parse(sessionStorage.getItem("user"));
+      if (user.username !== user_new.username) {
+        sessionStorage.setItem("username", user_new.username);
+      }
+    });
+  }
+
+
+  function updateUser(user){
+    sessionStorage.setItem("user",JSON.stringify(user))
+    window.location.href="/change.html"
+  }
+
+  function addUser(user){
+    sessionStorage.setItem("user",JSON.stringify(user))
+    window.location.href="/addUser.html"
+  }
+
+  function user() {
+    var username = sessionStorage.getItem("username");
+    var data = {
+      username: username
+    }
+    $.post(
+            "/selectQuanxianByUsername",
+            data,
+            function(data, text, XMLHttpRequest) {
+              //判断权限
+              if (data != "管理员") {
+                alert("你没有权限");
+                // 隐藏表格
+                document.querySelector('table').style.display = 'none';
+              } else {
+                liebiao(); // 执行列表方法
+                window.location.href = '#liebiao'; // 跳转到列表
+              }
+            }
+    )
+  }
+
+  function saveUser(){
+    var user_new1 ={
+      username: $(".nicheng").val(),
+      sex: $(".xingbie").val(),
+      signature: $(".qianming").val(),
+      phone: $(".shouji").val(),
+      email: $(".youxiang").val()
+    };
+    $.post(
+            "/saveUser",
+            user_new1,
+            function (data, text, XMLHttpRequest){
+              alert("保存成功");
+              // 更新sessionStorage中的username
+              if(user.username!=$("#username").val()) {
+                sessionStorage.setItem("username", user_new1.username);
+              }
+              // 重新加载页面或做其他操作
+              window.location.href = "/my.html";
+            }
+    );
+  }
+
+
+
+  function ziliao() {
+    document.getElementById("liebiao").style.display = "none";
+    document.getElementById("ziliao").style.display = "block";
+    document.getElementById("guanyu").style.display = "none";
+  }
+  function liebiao() {
+    document.getElementById("liebiao").style.display = "block";
+    document.getElementById("ziliao").style.display = "none";
+    document.getElementById("guanyu").style.display = "none";
+  }
+  function guanyu() {
+    document.getElementById("liebiao").style.display = "none";
+    document.getElementById("ziliao").style.display = "none";
+    document.getElementById("guanyu").style.display = "block";
+  }
+  function setActive(elem) {
+    var items = document.getElementsByClassName('active');
+    for (var i = 0; i < items.length; i++) {
+      items[i].classList.remove('active');
+    }
+    elem.classList.add('active');
+  }
+
+
+
+</script>
+</html>

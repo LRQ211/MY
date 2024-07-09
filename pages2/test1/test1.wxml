@@ -1,0 +1,37 @@
+<!--pages/test1/test1.wxml-->
+<view class="container">
+  <view class="header">
+    <text class="title">Welcome to Bee System</text>
+  </view>
+  
+  <!-- 轮播图 -->
+  <swiper class="swiper-container" indicator-dots indicator-color="#ddd" indicator-active-color="#ff6600" autoplay circular>
+    <swiper-item class="swiper-item"><image src="/pages/test1/images/b1.jpg" mode="scaleToFill"/></swiper-item>
+    <swiper-item class="swiper-item"><image src="/pages/test1/images/b3.jpg" mode="scaleToFill"/></swiper-item>
+    <swiper-item class="swiper-item"><image src="/pages/test1/images/b2.jpg" mode="scaleToFill"/></swiper-item>
+  </swiper>
+
+  <view class="features">
+    <navigator url="/pages/mqtt/mqtt" class="feature">
+      <text class="feature-text">环境监测</text>
+    </navigator>
+    <navigator url="/pages/baojing/baojing" class="feature">
+      <text class="feature-text">智能报警</text>
+    </navigator>
+  </view>
+
+  <view class="about">
+    <text class="about-text">智能蜂眼系统介绍</text>
+    <text class="about-description">警蜂眼是基于OpenMV的智能蜂眼环境监测与报警系统，结合Yolov5模型进行毒蜂检测和生存环境监测,该系统可在日常生活、研究教育和农业领域发挥作用。</text>
+  </view>
+
+  <!-- 视频 -->
+  <view class="video-container">
+   <video src="../../pages/test1/videos/bb.mp4" controls></video>
+  </view>
+
+  <!-- Footer -->
+  <view class="footer">
+    <text class="footer-text">© 2024 Bee System. All Rights Reserved.</text>
+  </view>
+</view>

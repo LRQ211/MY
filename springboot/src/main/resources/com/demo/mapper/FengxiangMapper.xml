@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.mapper.FengxiangMapper" >
+    <resultMap id="BaseResultMap" type="com.demo.javaBean.Fengxiang" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="manager" property="manager" jdbcType="VARCHAR" />
+        <result column="date" property="date" jdbcType="VARCHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="alarm" property="alarm" jdbcType="VARCHAR" />
+        <result column="share" property="share" jdbcType="VARCHAR" />
+        <result column="xiugai" property="xiugai" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="selectFengxiang" resultType="com.demo.javaBean.Fengxiang">
+        select * FROM  fengxiang
+    </select>
+    <update id="updateFengxiang">
+        update fengxiang set name=#{fengxiang.name},manager=#{fengxiang.manager},address=#{fengxiang.address},state=#{fengxiang.state} where id=#{fengxiang.id}
+    </update>
+    <insert id="addFengxiang">
+        insert into fengxiang (id,name, manager, date,address,state,alarm) values (#{fengxiang.id},#{fengxiang.name},#{fengxiang.manager},#{fengxiang.date},#{fengxiang.address},#{fengxiang.state},#{fengxiang.alarm})
+    </insert>
+
+    <delete id="deleteFengxiang">
+        delete from fengxiang where id=#{fengxiang.id}
+    </delete>
+
+    <select id="searchId" >
+        SELECT id,name, manager, date,address,state,alarm FROM fengxiang WHERE id = #{id}
+    </select>
+
+
+
+
+</mapper>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>地图定位</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.5.1/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        #map {
+            height: 600px;
+            width: 70%;
+            float: left;
+        }
+        #data {
+            width: 20%;
+            height: 300px;
+            /*float: right;*/
+            right: 3%;
+            position: absolute;
+            padding: 10px;
+            box-sizing: border-box;
+            background: black;
+            color: white;
+            border-radius: 30px;
+            border:2px white solid;
+        }
+        #stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: transparent;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+<div id="stars"></div>
+<h1>当前位置</h1>
+<div id="map"></div>
+<div id="data">
+    <h2>经纬度数据</h2>
+    <div id="latitude">经度: </div>
+    <div id="longitude">纬度: </div>
+</div>
+<script>
+    // 初始化地图，设置初始视图和缩放级别
+    var map = L.map('map').setView([0, 0], 12); // 将缩放级别设置为 12 以显示街道级别
+
+    // 使用 OpenStreetMap 的 tile layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> 贡献者',
+        maxZoom: 19 // 设置最大缩放级别为 19
+    }).addTo(map);
+
+    // 更新地图上的定位点
+    function updateMap(locations) {
+        locations.forEach(function(location) {
+            L.marker([location.latitude, location.longitude]).addTo(map)
+                .bindPopup("经度: " + location.latitude + ", 纬度: " + location.longitude)
+                .openPopup();
+
+            // 更新数据框
+            document.getElementById('latitude').innerText = "经度: " + location.latitude;
+            document.getElementById('longitude').innerText = "纬度: " + location.longitude;
+        });
+    }
+
+    // 从服务器获取定位点数据
+    fetch('/locations')
+        .then(response => response.json())
+        .then(data => {
+            if (Array.isArray(data)) {
+                updateMap(data);
+            } else {
+                console.error("Received data is not an array:", data);
+            }
+        })
+        .catch(error => console.error("Failed to load locations:", error));
+
+    // 设置 WebSocket 连接以接收实时更新
+    var socket = new SockJS('/gs-guide-websocket');
+    var stompClient = Stomp.over(socket);
+    stompClient.connect({}, function (frame) {
+        console.log('Connected: ' + frame);
+        stompClient.subscribe('/topic/locations', function (message) {
+            var location = JSON.parse(message.body);
+            updateMap([location]);
+        });
+    });
+</script>
+<script>
+    // 流星背景动画
+    const canvas = document.createElement('canvas');
+    document.getElementById('stars').appendChild(canvas);
+    const ctx = canvas.getContext('2d');
+
+    const stars = [];
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+
+    function createStar() {
+        return {
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            size: Math.random() * 2,
+            speed: Math.random() * 0.5 + 0.2
+        };
+    }
+
+    function drawStars() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = 'white';
+        stars.forEach(star => {
+            ctx.beginPath();
+            ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+            ctx.fill();
+            star.y += star.speed;
+            if (star.y > canvas.height) {
+                star.y = 0;
+                star.x = Math.random() * canvas.width;
+            }
+        });
+    }
+
+    function animateStars() {
+        drawStars();
+        requestAnimationFrame(animateStars);
+    }
+
+    function initStars(count) {
+        for (let i = 0; i < count; i++) {
+            stars.push(createStar());
+        }
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    initStars(300);
+    animateStars();
+</script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>欢迎来到毒蜂信息社区</title>
+  <style>
+    body {
+      background-color: black;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden; /* 防止水平滚动条出现 */
+    }
+    .header {
+      background-color: rgba(0, 204, 154, 0.9); /* 绿色半透明背景 */
+      color: #fff;
+      padding: 20px 0;
+      text-align: center;
+      font-size: 32px;
+      font-weight: bold;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      position: relative;
+      z-index: 2;
+      margin-bottom: 20px;
+    }
+    .content {
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.9); /* 半透明背景 */
+      margin: 30px auto;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      max-width: 1000px;
+      position: relative;
+      z-index: 2;
+    }
+    .section-title {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #333;
+      text-align: center;
+      border-bottom: 2px solid rgba(0, 204, 154, 0.9); /* 绿色半透明边框 */
+      padding-bottom: 10px;
+    }
+    .section {
+      margin-bottom: 40px;
+    }
+    .community-image {
+      width: 50%;
+      margin-left: 25%;
+      position: relative;
+      height: auto;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+    .community-description {
+      font-size: 18px;
+      margin-top: 10px;
+      color: #666;
+      text-align: justify;
+      line-height: 1.6;
+    }
+
+    .button {
+      display: block;
+      width: 220px;
+      margin: 20px auto;
+      padding: 12px 0;
+      text-align: center;
+      background-color: rgba(0, 204, 154, 0.9); /* 绿色半透明背景 */
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+    .button:hover {
+      background-color: rgba(0, 204, 154, 1); /* 更深的绿色 */
+    }
+    ul.community-description {
+      padding-left: 20px;
+      list-style-type: disc;
+    }
+    .welcome-message {
+      font-size: 20px;
+      color: #333;
+      text-align: center;
+      margin: 30px 0;
+    }
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background-color: white;
+      border-radius: 50%;
+      box-shadow: 0 0 6px white;
+      animation: star-animation 5s linear infinite;
+    }
+    @keyframes star-animation {
+      0% {
+        transform: translateY(0) translateX(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) translateX(100vw);
+        opacity: 0;
+      }
+    }
+  </style>
+  <script>
+    function createStars() {
+      for (let i = 0; i < 100; i++) {  // 增加星星的数量到100
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.top = `${Math.random() * 100}vh`;
+        star.style.left = `${Math.random() * 100}vw`;
+        star.style.animationDuration = `${Math.random() * 5 + 5}s`;  // 设置动画时长为5到10秒之间
+        star.style.animationDelay = `${Math.random() * 5}s`;
+        document.body.appendChild(star);
+      }
+    }
+
+    window.onload = function() {
+      createStars(); // Create stars for the background
+    }
+  </script>
+</head>
+<body>
+<div class="header">欢迎来到毒蜂信息社区</div>
+<div class="content">
+  <div class="welcome-message">感谢您的加入！我们很高兴欢迎您成为我们社区的一员。</div>
+  <div class="section-title">社区功能</div>
+  <div class="section">
+    <img src="images/community.jpg" alt="社区图片" class="community-image">
+    <p class="community-description">在这里，您可以享受以下功能：</p>
+    <ul class="community-description">
+      <li>浏览和发布论坛帖子，与其他毒蜂爱好者互动交流</li>
+      <li>阅读和撰写博客，分享您的研究和发现</li>
+      <li>参加社区组织的线上和线下活动，拓展您的人脉</li>
+      <li>访问资源库，获取最新的毒蜂研究资料和工具</li>
+    </ul>
+    <p class="community-description">立即开始探索我们的社区，与志同道合的朋友们一起交流学习吧！</p>
+    <a href="luntan.html" class="button">进入论坛</a>
+  </div>
+</div>
+
+</body>
+</html>

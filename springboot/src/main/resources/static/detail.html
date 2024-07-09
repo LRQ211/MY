@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>数据详细页面</title>
+    <script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <style>
+        .b {
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-end; /* Right align */
+        }
+        body {
+            background-color: #d3ffd3; /* 浅绿色背景色 */
+        }
+        .header {
+            text-align: center;
+            font-size: 2em;
+            background-color: lightyellow;
+            padding: 10px;
+        }
+        .navbar {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .navbar a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #007bff;
+        }
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+        .data {
+            border: 1px solid #A6C1E4;
+            font-family: Arial;
+            background-color: lightyellow;
+            padding: 20px;
+            margin: 0 auto;
+            width: 60%; /* 缩小宽度 */
+            height: 500px; /* 调整高度 */
+            display: none; /* Initially hide all data divs */
+            position: relative;
+        }
+        .data p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        .echarts {
+            background-color: mediumseagreen;
+            border: 1px solid black;
+            height: 320px;
+            width: 400px;
+            text-align: center;
+            margin: 0 auto; /* Center the chart */
+        }
+        table {
+            width: 100%; /* 设置表格宽度为100% */
+        }
+        table th {
+            border: 1px solid black;
+            background-color: #71C1FB;
+            font-size: 15px;
+            text-align: center;
+        }
+        table td {
+            font-size: 12px;
+            border: 1px solid #A6C1E4;
+            text-align: center;
+            padding-top: 5px;
+        }
+        .double {
+            background-color: orange;
+        }
+        .hidden {
+            display: none;
+        }
+        .alarm {
+            text-align: center;
+            background-color: lightyellow;
+            padding: 10px;
+            border: 2px solid black;
+            width: 150px; /* 缩小宽度 */
+            height: 200px; /* 缩小高度 */
+            border-radius: 10px;
+            position: fixed;
+            top: 90px;
+            left: 10px;
+        }
+        .introduction {
+            margin: 20px auto;
+            width: 60%;
+            background-color: lightyellow;
+            padding: 20px;
+            border: 1px solid #A6C1E4;
+            font-family: Arial;
+            text-align: justify;
+        }
+    </style>
+</head>
+<body>
+<h1 class="header">蜂箱系统数据</h1>
+<div class="navbar">
+    <a href="#" onclick="showTable('moviesTable')">数据分析</a>
+    <a href="#" onclick="showTable('temperature-humidity-analysis')">温湿度数据分析</a>
+    <a href="#" onclick="showTable('light-intensity-analysis')">光照强度分析</a>
+</div>
+
+<div class="alarm" id="alarmCountDiv">
+    <h3>Alarm Count: <span id="alarmCount"></span></h3>
+    <img width="50px" height="60px" src="/images/报警信息.png" alt="Icon">
+</div>
+
+<!-- 添加介绍部分 -->
+<div class="introduction" id="introduction">
+    <p>
+        蜂箱系统是一种现代化的蜂群管理工具，通过对蜂箱内部环境的监测和数据分析，帮助蜂农更好地管理蜂群，确保蜂蜜的高产和高质量。该系统通过各种传感器实时监测蜂箱内部的温度、湿度和光照强度等参数，并将这些数据传输到云端进行分析。蜂农可以通过移动设备或电脑随时查看蜂箱内部的环境变化，并根据分析结果进行相应的调整。例如，当蜂箱内部温度过高或过低时，蜂农可以及时采取措施进行降温或保温；当湿度过高或过低时，可以调整通风设备或喷水系统；当光照强度不足时，可以适当增加光照。通过这些措施，蜂农可以为蜂群提供一个适宜的生长环境，从而提高蜂蜜的产量和质量。此外，蜂箱系统还具备报警功能，当监测到异常情况时，会及时发出报警，提醒蜂农采取相应措施。这些功能使得蜂箱系统成为蜂农管理蜂群的得力助手。
+    </p>
+</div>
+
+<div class="data" id="moviesTable">
+    <p>这是蜂箱系统的数据分析表格。该表格展示了蜂箱系统在不同时间点的实时温度、实时湿度和光照强度等数据。通过这些数据，我们可以了解蜂箱内部的环境变化，从而及时做出调整，确保蜂群的健康生长。同时，表格中还记录了报警次数，以提醒我们注意可能存在的异常情况。这些数据对于蜂农来说非常重要，可以帮助他们更好地管理蜂箱，确保蜂蜜的高产和高质量。</p>
+    <table>
+        <thead>
+        <tr>
+            <th>实时温度</th>
+            <th>实时湿度</th>
+            <th>光照强度</th>
+            <th>报警次数</th>
+            <th>采集时间</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+<div class="data" id="temperature-humidity-analysis">
+    <p>这是温湿度数据分析表格。该表格通过图表展示了蜂箱内部温度和湿度的变化趋势。温度和湿度是影响蜂群健康的重要因素，保持适宜的温湿度可以促进蜂群的繁殖和蜂蜜的生产。通过该表格，我们可以直观地看到温度和湿度的变化，从而及时进行调控，确保蜂箱内部环境的稳定。</p>
+    <div class="echarts" id="temperature-humidity-chart"></div>
+</div>
+
+<div class="data" id="light-intensity-analysis">
+    <p>这是光照强度数据分析表格。光照强度对蜂群的活动和蜂蜜的生产有重要影响。通过该表格展示的光照强度数据，我们可以了解蜂箱所在位置的光照情况，选择适当的遮光措施或移动蜂箱位置，以提供适宜的光照环境，促进蜂群的健康生长和高产。</p>
+    <div class="echarts" id="light-intensity-chart"></div>
+</div>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+<script>
+    function showTable(id) {
+        // Hide all data elements
+        const dataElements = document.querySelectorAll('.data');
+        dataElements.forEach(element => {
+            element.style.display = 'none';
+        });
+
+        // Hide the introduction
+        document.getElementById('introduction').style.display = 'none';
+
+        // Show the selected data element
+        const selectedElement = document.getElementById(id);
+        selectedElement.style.display = 'block';
+
+        // Show alarm count
+        const alarmCountDiv = document.getElementById('alarmCountDiv');
+        alarmCountDiv.style.display = 'block';
+    }
+
+    function getQueryParameter(name) {
+        let url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        let regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+    $(function() {
+        let movieId = getQueryParameter('movieId');
+        $.get("/selectMqtt", { movieid: movieId }, function(data) {
+            if (data.length > 0) {
+                var alarmCount = data[0].alarm; // Get alarm count for the first entry
+                $('#alarmCount').text(alarmCount); // Set alarm count in the HTML
+            }
+            var tableBody = $('#moviesTable').find('tbody');
+            for (var i = 0; i < data.length; i++) {
+                var mqtt = data[i];
+                var row = '<tr>' +
+                    '<td>' + mqtt.temp + ' ℃</td>' +
+                    '<td>' + mqtt.humidity + ' %</td>' +
+                    '<td>' + mqtt.light + ' lux</td>' +
+                    '<td>' + mqtt.alarm + '</td>' +
+                    '<td>' + mqtt.time + '</td>' +
+                    '</tr>';
+                tableBody.append(row);
+            }
+            updateCharts(data);
+        });
+
+        function updateCharts(data) {
+            var times = data.map(function(item) { return item.time; });
+            var temps = data.map(function(item) { return item.temp; });
+            var humidities = data.map(function(item) { return item.humidity; });
+            var lights = data.map(function(item) { return item.light; });
+
+            // Update temperature and humidity chart
+            myChart1.setOption({
+                xAxis: {
+                    data: times
+                },
+                series: [
+                    {
+                        name: '温度',
+                        type: 'line',
+                        yAxisIndex: 0,
+                        data: temps
+                    },
+                    {
+                        name: '湿度',
+                        type: 'line',
+                        yAxisIndex: 1,
+                        data: humidities
+                    }
+                ]
+            });
+
+            // Update light intensity chart
+            myChart3.setOption({
+                xAxis: {
+                    data: times
+                },
+                series: [
+                    {
+                        name: '光照强度',
+                        type: 'line',
+                        data: lights
+                    }
+                ]
+            });
+        }
+
+        // Define echarts configuration
+        var option1 = {
+            title: {
+                text: '温度和湿度数据'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['温度', '湿度']
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false
+            },
+            yAxis: [
+                {
+                    type: 'value',
+                    name: '温度',
+                    position: 'left',
+                    axisLabel: {
+                        formatter: '{value} °C'
+                    }
+                },
+                {
+                    type: 'value',
+                    name: '湿度',
+                    position: 'right',
+                    axisLabel: {
+                        formatter: '{value} %'
+                    }
+                }
+            ],
+            series: []
+        };
+
+        var option3 = {
+            title: {
+                text: '光照数据'
+            },
+            xAxis: {
+                type: 'category'
+            },
+            yAxis: {
+                type: 'value',
+                axisLabel: {
+                    formatter: '{value} lux'
+                }
+            },
+            series: [{
+                type: 'line',
+                data: []
+            }]
+        };
+
+        var chartDom1 = document.getElementById('temperature-humidity-chart');
+        var myChart1 = echarts.init(chartDom1);
+        myChart1.setOption(option1);
+
+        var chartDom3 = document.getElementById('light-intensity-chart');
+        var myChart3 = echarts.init(chartDom3);
+        myChart3.setOption(option3);
+    });
+</script>
+</body>
+</html>

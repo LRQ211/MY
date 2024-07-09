@@ -1,0 +1,63 @@
+<!-- huangjing.wxml -->
+
+
+<!-- huangjing.wxml -->
+
+  <!-- 更新后的天气组件 -->
+  <view class="weather-card">
+    <view class="weather-info">
+      <view class="weather-location">{{weatherLocation}}</view>
+      <view class="weather-temperature">{{weatherTemp}}°C</view>
+      <image class="weather-icon" src="{{weatherIcon}}"></image>
+      <view class="weather-condition">{{weatherCondition}}</view>
+      <view class="date-time">
+        <text>{{currentDate}}</text>
+        <text>{{currentTime}}</text>
+      </view>
+    </view>
+
+  
+  <!-- 其他现有内容 -->
+</view>
+
+
+  <page-container class="all">
+  <view class="icon-a-beehoneybeeapisapidae:before"></view>
+</page-container>
+
+
+
+<view class="sensor-box">传感器设备</view>
+<block wx:for="{{mqttData}}" wx:key="index">
+          
+<view class="temperature-box">
+  <text class="weather">温度{{item.temp}}°C</text> <!-- 显示温度 -->
+  <image class="iconfont icon-wenduji"></image>
+</view>  
+
+<view class="humidity-box">
+  <text class="weather">湿度：{{item.humidity}}%</text> <!-- 显示湿度 -->
+  <image class="iconfont icon-shidu"></image>
+</view>
+
+<view class="Lux-box">
+  <text class="weather">光照：{{item.light}}Lux</text> <!-- 显示光照强度 -->
+  <image class="iconfont icon-guangzhaoqiangdu"></image>
+</view>
+
+<view class="distance-box">
+  <text class="weather">距离:9m</text>
+  <image class="iconfont icon-juli"></image>
+</view>
+
+
+<view class="flex-container">
+  <view class="flex-item">wd</view>
+  <view class="flex-item">wd</view>
+</view>
+</block>
+           
+           
+                <!-- <text>报警状态：{{item.alarm}}</text>
+                <text>时间：{{item.time}}</text> --> 
+    

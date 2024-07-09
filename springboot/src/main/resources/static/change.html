@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 300px;
+  }
+
+  input {
+    margin-bottom: 10px;
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+  }
+
+  button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 10%;
+    top:70%;
+    position: absolute;
+  }
+
+  button:hover {
+    background-color: #0056b3;
+  }
+</style>
+<script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
+<body>
+<form>
+  用户id:&nbsp&nbsp&nbsp&nbsp<input type="text" id="id" disabled=""><br>
+  用户姓名:<input type="text" id="username"><br>
+  用户密码:<input type="text" id="password"><br>
+  用户头像:<input type="text" id="pictureUrl">
+</form>
+<button onclick="updateUser()">修改</button>
+</body>
+<script>
+  $(function (){
+    var user=JSON.parse(sessionStorage.getItem("user"))
+    //修改界面，展示数据
+    $("#id").val(user.id)
+    $("#username").val(user.username)
+    $("#password").val(user.password)
+    $("#pictureUrl").val(user.pictureUrl)
+
+  })
+
+  function  updateUser(){
+    var user_new ={
+      id: $("#id").val(),
+      username:$("#username").val(),
+      password:$("#password").val(),
+      pictureUrl: $("#pictureUrl").val(),
+    }
+    $.post(
+            "/updateUser",
+            user_new,
+            function (data, text, XMLHttpRequest){
+              alert("修改成功")
+              var user=JSON.parse(sessionStorage.getItem("user"))
+              if(user.username!=$("#username").val()){
+                sessionStorage.setItem("username",$("#username").val())
+
+              }
+              window.location.href="/my.html"
+            }
+    )
+  }
+</script>
+</html>

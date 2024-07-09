@@ -1,0 +1,30 @@
+<!-- pages/searchPage/searchPage.wxml -->
+<view class="container">
+  <view class="feedback-header">
+    <text class="feedback-title">蜂箱系统数据</text>
+    <image class="image" src="/images/卡通蜜蜂昆虫 (1).png"></image>
+  </view>
+  <view class="search-bar">
+    <input type="text" bindinput="inputChange" placeholder="输入Id" />
+    <button bindtap="searchMqtt">搜索</button>
+  </view>
+  
+  <block wx:for="{{groupedData}}" wx:key="id">
+    <view class="table">
+      <view class="table-row">
+        <text>ID: {{item.id}}</text>
+      </view>
+      <view class="table-row">
+        <text>温度: {{item.data[0].temp}}</text>
+        <text>湿度: {{item.data[0].humidity}} %</text>
+      </view>
+      <view class="table-row">
+        <text>光照强度: {{item.data[0].light}}Lux</text>
+        <text>采集时间: {{item.data[0].date}}</text>
+      </view>
+      <view class="table-row">
+        <text>采集地点: {{item.data[0].place}}</text>
+      </view>
+    </view>
+  </block>
+</view>

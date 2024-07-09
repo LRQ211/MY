@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>毒蜂信息社区论坛</title>
+  <style>
+    body {
+      background-color: black;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden; /* 防止水平滚动条出现 */
+    }
+    .header {
+      background-color: rgba(0, 204, 154, 0.9); /* 绿色半透明背景 */
+      color: #fff;
+      padding: 20px 0;
+      text-align: center;
+      font-size: 32px;
+      font-weight: bold;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      position: relative;
+      z-index: 2;
+      margin-bottom: 20px;
+    }
+    .content {
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.9); /* 半透明背景 */
+      margin: 30px auto;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      max-width: 1000px;
+      position: relative;
+      z-index: 2;
+    }
+    .section-title {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #333;
+      text-align: center;
+      border-bottom: 2px solid rgba(0, 204, 154, 0.9); /* 绿色半透明边框 */
+      padding-bottom: 10px;
+    }
+    .section {
+      margin-bottom: 40px;
+    }
+    .forum-post {
+      padding: 15px;
+      background-color: rgba(249, 249, 249, 0.9); /* 半透明背景 */
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+    .forum-post h3 {
+      margin-top: 0;
+      font-size: 20px;
+      color: #333;
+    }
+    .forum-post p {
+      font-size: 16px;
+      color: #666;
+      margin: 10px 0;
+    }
+    .forum-post .actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+    .forum-post .actions button {
+      background-color: rgba(0, 204, 154, 0.9); /* 绿色半透明背景 */
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    .forum-post .actions button:hover {
+      background-color: rgba(0, 204, 154, 1); /* 更深的绿色 */
+    }
+    .reply {
+      margin-left: 20px;
+      border-left: 2px solid rgba(0, 204, 154, 0.9); /* 绿色半透明边框 */
+      padding-left: 15px;
+    }
+
+    .button {
+      display: block;
+      width: 200px;
+      margin: 20px auto;
+      padding: 12px 0;
+      text-align: center;
+      background-color: rgba(0, 204, 154, 0.9); /* 绿色半透明背景 */
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+    .button:hover {
+      background-color: rgba(0, 204, 154, 1); /* 更深的绿色 */
+    }
+    .new-post-form {
+      margin-top: 20px;
+      padding: 20px;
+      background-color: rgba(249, 249, 249, 0.9); /* 半透明背景 */
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+    .new-post-form input, .new-post-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    .new-post-form button {
+      padding: 10px 20px;
+      background-color: rgba(0, 204, 154, 0.9); /* 绿色半透明背景 */
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      color: #fff;
+    }
+    .new-post-form button:hover {
+      background-color: rgba(0, 204, 154, 1); /* 更深的绿色 */
+    }
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background-color: white;
+      border-radius: 50%;
+      box-shadow: 0 0 6px white;
+      animation: star-animation 5s linear infinite;
+    }
+    @keyframes star-animation {
+      0% {
+        transform: translateY(0) translateX(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) translateX(100vw);
+        opacity: 0;
+      }
+    }
+  </style>
+  <script>
+    function createStars() {
+      for (let i = 0; i < 100; i++) {  // 增加星星的数量到100
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.top = `${Math.random() * 100}vh`;
+        star.style.left = `${Math.random() * 100}vw`;
+        star.style.animationDuration = `${Math.random() * 5 + 5}s`;  // 设置动画时长为5到10秒之间
+        star.style.animationDelay = `${Math.random() * 5}s`;
+        document.body.appendChild(star);
+      }
+    }
+
+    window.onload = function() {
+      createStars(); // Create stars for the background
+    }
+  </script>
+</head>
+<body>
+<div class="header">毒蜂信息社区论坛</div>
+<div class="content">
+  <div class="section-title">论坛帖子</div>
+  <div class="section" id="forum-posts">
+    <!-- 示例帖子 -->
+    <div class="forum-post">
+      <h3>毒蜂研究最新发现</h3>
+      <p>最近，我们在研究毒蜂的过程中发现了一些有趣的现象。这些现象可能对我们理解毒蜂的行为和生态系统有重要的意义。</p>
+      <div class="actions">
+        <button onclick="likePost(this)">点赞(10)</button>
+        <button onclick="replyPost(this)">回复</button>
+        <button onclick="commentPost(this)">评论</button>
+        <button onclick="sharePost(this)">转发</button>
+      </div>
+      <div class="replies">
+        <div class="reply">非常有趣的发现，期待更多的研究成果！</div>
+        <div class="reply">谢谢分享，有没有更多的细节可以介绍一下？</div>
+      </div>
+    </div>
+  </div>
+  <div class="new-post-form">
+    <h3>发布新帖子</h3>
+    <input type="text" id="post-title" placeholder="帖子标题">
+    <textarea id="post-content" rows="4" placeholder="帖子内容"></textarea>
+    <button onclick="postMessage()">发布</button>
+  </div>
+</div>
+
+
+<script>
+  //DOMContentLoaded事件监听器: 当页面加载完成后，loadPosts函数会被调用，加载并显示存储在localStorage中的帖子。
+  document.addEventListener('DOMContentLoaded', (event) => {
+    loadPosts();
+  });
+//loadPosts函数: 从localStorage中获取帖子数据并解析为JavaScript对象数组，然后清空页面上的论坛区域，并根据每个帖子的内容创建并添加帖子元素到页面。
+  function loadPosts() {
+    const posts = JSON.parse(localStorage.getItem('forumPosts')) || [];
+    const forumSection = document.getElementById('forum-posts');
+    forumSection.innerHTML = '';
+    posts.forEach(post => {
+      const postElement = createPostElement(post.title, post.content, post.likes, post.comments);
+      forumSection.appendChild(postElement);
+    });
+  }
+//createPostElement函数: 创建并返回一个包含帖子内容的div元素，其中包含帖子标题、内容、点赞按钮、回复按钮、评论按钮、转发按钮以及评论区域。
+  function createPostElement(title, content, likes = 0, comments = []) {
+    const postElement = document.createElement('div');
+    postElement.className = 'forum-post';
+    postElement.innerHTML = `
+      <h3>${title}</h3>
+      <p>${content}</p>
+      <div class="actions">
+        <button onclick="likePost(this)">点赞(${likes})</button>
+        <button onclick="replyPost(this)">回复</button>
+        <button onclick="commentPost(this)">评论</button>
+        <button onclick="sharePost(this)">转发</button>
+      </div>
+      <div class="replies"></div>
+    `;
+    comments.forEach(comment => {
+      const commentElement = document.createElement('div');
+      commentElement.className = 'reply';
+      commentElement.textContent = comment;
+      postElement.querySelector('.replies').appendChild(commentElement);
+    });
+    return postElement;
+  }
+//postMessage函数: 获取用户输入的标题和内容，创建新的帖子元素并添加到页面顶部，同时更新localStorage中的帖子列表。
+  function postMessage() {
+    const title = document.getElementById('post-title').value;
+    const content = document.getElementById('post-content').value;
+    if (title && content) {
+      const forumSection = document.getElementById('forum-posts');
+      const postElement = createPostElement(title, content);
+      forumSection.insertBefore(postElement, forumSection.firstChild);
+
+      const posts = JSON.parse(localStorage.getItem('forumPosts')) || [];
+      posts.unshift({ title, content, likes: 0, comments: [] });
+      localStorage.setItem('forumPosts', JSON.stringify(posts));
+
+      document.getElementById('post-title').value = '';
+      document.getElementById('post-content').value = '';
+    } else {
+      alert('请填写帖子标题和内容！');
+    }
+  }
+//likePost函数: 增加帖子点赞数并更新按钮显示，同时更新localStorage中的点赞数。
+  function likePost(button) {
+    const postElement = button.closest('.forum-post');
+    const title = postElement.querySelector('h3').textContent;
+    const posts = JSON.parse(localStorage.getItem('forumPosts')) || [];
+    const post = posts.find(p => p.title === title);
+    if (post) {
+      post.likes += 1;
+      button.textContent = `点赞(${post.likes})`;
+      localStorage.setItem('forumPosts', JSON.stringify(posts));
+    }
+  }
+//replyPost函数: 提示用户输入回复内容，创建回复元素并添加到帖子中的回复区域。
+  function replyPost(button) {
+    const postElement = button.closest('.forum-post');
+    const replyContent = prompt('输入您的回复:');
+    if (replyContent) {
+      const replyElement = document.createElement('div');
+      replyElement.className = 'reply';
+      replyElement.textContent = replyContent;
+      postElement.querySelector('.replies').appendChild(replyElement);
+    }
+  }
+//提示用户输入评论内容，创建评论元素并添加到帖子中的评论区域，同时更新localStorage中的评论列表。
+  function commentPost(button) {
+    const postElement = button.closest('.forum-post');
+    const commentContent = prompt('输入您的评论:');
+    if (commentContent) {
+      const commentsElement = postElement.querySelector('.replies');
+      const commentElement = document.createElement('div');
+      commentElement.className = 'reply';
+      commentElement.textContent = commentContent;
+      commentsElement.appendChild(commentElement);
+
+      const title = postElement.querySelector('h3').textContent;
+      const posts = JSON.parse(localStorage.getItem('forumPosts')) || [];
+      const post = posts.find(p => p.title === title);
+      if (post) {
+        post.comments.push(commentContent);
+        localStorage.setItem('forumPosts', JSON.stringify(posts));
+      }
+    }
+  }
+
+  function sharePost(button) {
+    const postElement = button.closest('.forum-post');
+    const title = postElement.querySelector('h3').textContent;
+    const content = postElement.querySelector('p').textContent;
+    const shareContent = `标题: ${title}\n内容: ${content}`;
+    alert(`分享成功: \n${shareContent}`);
+  }
+</script>
+</body>
+</html>

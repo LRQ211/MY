@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.mapper.UserMapper" >
+    <resultMap id="BaseResultMap" type="com.demo.javaBean.User" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="username" property="username" jdbcType="VARCHAR" />
+        <result column="password" property="password" jdbcType="VARCHAR" />
+<!--        添加-->
+        <result column="PictureUrl" property="PictureUrl" jdbcType="VARCHAR" />
+        <result column="sex" property="sex" jdbcType="VARCHAR" />
+        <result column="signature" property="signature" jdbcType="VARCHAR" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="email" property="email" jdbcType="VARCHAR" />
+    </resultMap>
+
+
+    <select id="login" resultType="int">
+        select count(*) FROM  users where username=#{user.username} and password=#{user.password}
+    </select>
+
+<!--    添加-->
+
+    <select id="selectUser" resultType="com.demo.javaBean.User">
+        select * FROM  users
+    </select>
+
+    <select id="selectQuanxianByUsername" resultType="String">
+        select Quanxian FROM  users where username=#{username}
+    </select>
+
+    <update id="updateUser">
+        update users set username=#{user.username},password=#{user.password},pictureUrl=#{user.pictureUrl} where id=#{user.id}
+    </update>
+
+    <delete id="deleteUser">
+        delete from users where id=#{user.id}
+    </delete>
+
+    <update id="saveUser">
+        update users set username=#{user.username},sex=#{user.sex},signature=#{user.signature},phone=#{user.phone},email=#{user.email} where username=#{user.username}
+    </update>
+
+    <select id="getUserPicture" resultType="String">
+        select PictureUrl FROM  users where username=#{username}
+    </select>
+    <insert id="addUser">
+        insert into users (id,username, password, pictureUrl,quanxian,sex,signature,phone,email) values (#{user.id},#{user.username}, #{user.password}, #{user.pictureUrl},#{user.quanxian},#{user.sex},#{user.signature},#{user.phone},#{user.email})
+    </insert>
+
+    <select id="searchUser">
+        select id,username,password,pictureUrl,quanxian,sex,signature,phone,email
+        FROM  users
+        where id=#{id}
+    </select>
+
+
+</mapper>

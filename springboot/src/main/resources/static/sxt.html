@@ -1,0 +1,1246 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>智能蜂眼检测系统</title>
+  <script src="https://cdn.staticfile.net/jquery/2.2.4/jquery.min.js"></script>
+  <!-- 引入 echarts.js -->
+  <script src="https://cdn.staticfile.net/echarts/4.3.0/echarts.min.js"></script>
+
+
+</head>
+<body>
+
+<ul>
+  <li><img src="static/bee.png"></li>
+  <li><a class="active" href="login.html">首页</a></li>
+  <li><a href="#" onclick="showVideo()">监控</a></li>
+  <li><a href="#contact">联系</a></li>
+  <li><a href="#" onclick="showDataModal()">数据</a></li>
+  <li><a href="#" onclick="showBehaviorModal()">习性推测</a></li>
+
+</ul>
+
+
+
+
+<div class="header"></div>
+
+<div class="left">
+
+  <!-- 这里放置上半部分的内容 -->
+  <div class="security-score-widget">
+    <div class="icon-shield">Secure score</div>
+    <div class="score-title">安全评分</div>
+    <div class="score-value">9.8</div>
+    <div class="score-description">非常安全</div>
+    <div class="tooltip">安全度良好，设定范围内无毒蜂或只有少量毒蜂出现。</div>
+  </div>
+
+
+  <div class="div-left-section">
+    <!-- 这里放置下半部分的内容 -->
+    <!-- 报警次数插件 -->
+    <div class="alert-count-widget">
+      <div class="icon-bell">Alarm</div>
+      <div class="alert-title">报警次数</div>
+      <div class="alert-value">3</div>
+      <div class="alert-description">今日内毒蜂检测报警次数</div>
+    </div>
+
+
+  </div>
+</div>
+<div id="image-container" style="height: 300px; width: 400px; display: none; position: absolute; top: 0; left: 0; z-index: 999">
+  <img id="image" style="height: 100%; width: 100%" alt="" src=""/>
+</div>
+
+<div class="right">
+
+  <div class="temword">
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 280px;height:200px;"></div>
+    <script type="text/javascript">
+      // 基于准备好的dom，初始化ECharts实例
+      var myChart = echarts.init(document.getElementById('main'));
+
+      // 指定图表的配置项和数据
+      var option = {
+        title: {
+          text: '近五日检测到毒蜂时的温度值',
+          textStyle: {
+            color: '#FFFFFF' // 将标题的颜色改为#009900
+          }
+        },
+        tooltip: {},
+        legend: {
+          data:['温度值℃']
+        },
+        xAxis: {
+          data: ["day1","day2" ,"day3","day4","day5"],
+          axisLabel: {
+            color: '#FFFFFF' // 将x轴坐标的字体颜色改为白色
+          }
+        },
+        yAxis: {
+          axisLabel: {
+            color: '#FFFFFF' // 将x轴坐标的字体颜色改为白色
+          }},
+        series: [{
+          name: '温度值',
+          type: 'line',
+          data: [18, 20, 19, 26, 24],
+          itemStyle: {
+            color: '#B83B3C' // 将颜色设置为红色
+          }
+        }]
+      };
+
+      // 使用刚指定的配置项和数据显示图表。
+      myChart.setOption(option);
+      //处理点击事件并且弹出数据名称
+      myChart.on('click', function (params) {
+        alert(params.name);
+      });
+    </script>
+  </div>
+
+
+
+  <div class="humiword">
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main1" style="width: 300px;height:200px;"></div>
+    <script type="text/javascript">
+      // 基于准备好的dom，初始化echarts实例
+      var myChart = echarts.init(document.getElementById('main1'));
+
+      // 指定图表的配置项和数据
+      var option = {
+        title: {
+          text: '近五日检测到毒蜂时的湿度值',
+          left: 'center',
+          textStyle: {
+            color: '#FFFFFF' // 将标题的颜色改为#009900
+          }
+        },
+        tooltip: {},
+        legend: {
+          data:['湿度%']
+        },
+        xAxis: {
+          data: ["day1","day2","day3","day4","day5"],
+          axisLabel: {
+            color: '#FFFFFF' // 将x轴坐标的字体颜色改为白色
+          }
+        },
+        yAxis: {
+          axisLabel: {
+            color: '#FFFFFF' // 将y轴坐标的字体颜色改为白色
+          }
+        },
+        series: [{
+          name: '湿度',
+          type: 'bar',
+          data: [5, 20, 36, 10, 10],
+          itemStyle: {
+            color: '#B8D321' // 将柱状图的颜色设置为蓝色
+          }
+        }]
+      };
+
+      // 使用刚指定的配置项和数据显示图表。
+      myChart.setOption(option);
+    </script>
+  </div>
+
+
+  <div class="sunword">
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main2" style="width: 300px;height:200px;"></div>
+    <script type="text/javascript">
+      // 基于准备好的dom，初始化echarts实例
+      var myChart = echarts.init(document.getElementById('main2'));
+
+      // 指定图表的配置项和数据
+      var option = {
+        title: {
+          text: '近五日检测到毒蜂的光照强度',
+          left: 'center',
+          textStyle: {
+            color: '#FFFFFF' // 将标题的颜色改为#009900
+          }
+        },
+        tooltip: {},
+        legend: {
+          data:['光照'],
+          right: 0, // 图例放在右上角
+          bottom:20
+        },
+        xAxis: {
+          axisLabel: {
+            color: '#FFFFFF' // 将x轴坐标的字体颜色改为白色
+          }
+        },
+        yAxis: {
+          axisLabel: {
+            color: '#FFFFFF' // 将x轴坐标的字体颜色改为白色
+          }
+        },
+        series: [{
+          name: '光照',
+          type: 'line',
+          data: [5, 20, 36, 10, 10],
+          itemStyle: {
+            color: '#FF9900' // 将柱状图的颜色设置为蓝色
+          }
+        }]
+      };
+
+      // 使用刚指定的配置项和数据显示图表。
+      myChart.setOption(option);
+    </script>
+  </div>
+
+</div>
+
+<div class="box">
+  <ul id="slider" class="slider" style="left:-600px;">
+    <li class="slider-item"><img src="static/img.png"></li>
+    <li class="slider-item"><img src="static/img_1.png"></li>
+    <li class="slider-item"><img src="static/img_2.png"></li>
+    <li class="slider-item"><img src="static/img_3.png"></li>
+    <li class="slider-item"><img src="static/img.png"></li>
+    <!--            <li><img src="static/img_1.png"></li>-->
+    <!--            <li><img src="static/img_2.png"></li>-->
+  </ul>
+  <!-- 底部小圆点 -->
+  <ol id="circle" class="circle">
+    <li class="current">1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+  </ol>
+  <!-- 左右按钮 -->
+  <a href="javascript:;" id="prev" class="arrow prev">&lt;</a>
+  <a href="javascript:;" id="next" class="arrow next">&gt;</a>
+  <script>
+    var slider = document.getElementById("slider");
+    var box = slider.parentNode;//整个轮播容器
+    var circle = document.getElementById("circle");
+    var prev = document.getElementById("prev");
+    var next = document.getElementById("next");
+    var lis = circle.children;//小圆点
+    var iNow = 1;//记录当前是第几个小圆点;
+    var timerTwo = null;//用于存放定时器（自动轮播)名称
+
+    //滑动函数
+    function animate(obj, offset) {
+      clearInterval(obj.timer);
+      var speed = offset / 15; // 假设滑动次数为15
+      var target = slider.offsetLeft + offset;
+
+      obj.timer = setInterval(function() {
+        var value = target - slider.offsetLeft;
+        if (Math.abs(value) < Math.abs(speed)) {
+          slider.style.left = target + "px"; // 直接移动到目标位置
+          clearInterval(obj.timer);
+          // 循环逻辑调整
+          if (slider.offsetLeft < -2500) { // 当滑动超过最后一张图片
+            slider.style.left = "0px"; // 跳转到第一张图片
+          } else if (slider.offsetLeft > 0) { // 当滑动到第一张图片之前
+            slider.style.left = "-3000px"; // 跳转到最后一张图片的位置
+          }
+        } else {
+          slider.style.left = slider.offsetLeft + speed + "px";
+        }
+      }, 20);
+    }
+
+
+    //左右小箭头切换
+    prev.onclick = function(){
+      if(iNow == 1){//当在第一个小圆点slider盒子右移时
+        iNow = 5;
+      }else{
+        iNow--;
+      }
+      showButton(iNow);
+      animate(slider,600);//整个ul.slider盒子右移
+
+    }
+    next.onclick = function(){
+      if(iNow == 5){
+        iNow = 1;
+      }else{
+        iNow++;
+      }
+      showButton(iNow);
+      animate(slider,-600);//整个ul.slider盒子左移
+    }
+    // 点击小圆点切换图片
+    for(var i=0;i<lis.length;i++){
+      lis[i].index = i+1;//赋予每个小圆点对应的索引值(从1~5)
+      lis[i].onclick = function(){
+        if(this.className == "current"){
+          return;//点击当前图片对应的小圆点无效
+        }
+        var offset = (iNow - this.index)*600;//通过当前小圆点的小圆点和鼠标经过的索引差值，得到移动距离,注意图片向右切换则slider盒子左移，反之同理；
+        animate(slider,offset);
+        iNow = this.index;//把鼠标经过的小圆点的索引赋给iNow
+        showButton(iNow);
+      }
+    }
+    //当前小圆点背景移动
+    function showButton(index){
+      for(var j=0;j<lis.length;j++){
+        lis[j].className = "";
+      }
+      lis[index-1].className = "current";//因为lis是伪数组，索引从0开始
+    }
+
+    //左右小箭头淡入淡出
+    box.onmouseover = function(){
+      prev.style.display = "block";
+      next.style.display = "block";
+      stopPlay();
+    }
+    box.onmouseout = function(){
+      prev.style.display = "none";
+      next.style.display = "none";
+      autoPlay();
+    }
+
+    //自动轮播
+    function autoPlay(){
+      timerTwo = setInterval(function(){
+        next.onclick();//每3秒执行一次点击右箭头效果
+      },3000);
+    }
+    function stopPlay(){
+      clearInterval(timerTwo);
+    }
+    autoPlay();//默认执行自动轮播
+  </script>
+</div>
+
+<div class="center">
+
+  <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+  <div id="main3" style="height: 300px; width: 600px;"></div>
+  <!-- 图片容器 -->
+  <div id="chongqingImage" style="display: none;">
+    <img id="chongqingPic" src="" alt="重庆图" style="height: 320px; width: 600px; " >
+  </div>
+
+  <script type="text/javascript">
+    // 初始化饼图实例
+    var myPieChart = echarts.init(document.getElementById('main3'));
+
+    // 配置饼图
+    var pieOption = {
+      title: {
+        text: '全国蜂群占比饼图',
+        x: 'center',
+        textStyle: {
+          color: '#000000'
+        }
+      },
+      tooltip: {
+        trigger: 'item',
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
+      },
+      legend: {
+        orient: 'vertical',
+        right: 0,
+        top: 10,
+        data: ['重庆', '四川', '云南', '浙江', '山东', '河南', '河北', '安徽', '福建', '甘肃', '广西', '新疆', '湖北', '湖南', '贵州', '陕西', '吉林', '黑龙江'],
+        textStyle: {
+          color: '#000000'
+        }
+      },
+      series: [
+        {
+          name: '访问来源',
+          type: 'pie',
+          radius: '55%',
+          center: ['50%', '60%'],
+          data: [
+            {value: 335, name: '重庆'},
+            {value: 310, name: '四川'},
+            {value: 234, name: '云南'},
+            {value: 135, name: '浙江'},
+            {value: 1548, name: '山东'},
+            {value: 1548, name: '河南'},
+            {value: 1548, name: '河北'},
+            {value: 1548, name: '安徽'},
+            {value: 1548, name: '福建'},
+            {value: 1548, name: '甘肃'},
+            {value: 1548, name: '广西'},
+            {value: 1548, name: '新疆'},
+            {value: 1548, name: '湖北'},
+            {value: 1548, name: '湖南'},
+            {value: 1548, name: '贵州'},
+            {value: 1548, name: '陕西'},
+            {value: 1548, name: '吉林'},
+            {value: 1548, name: '黑龙江'}
+          ],
+          itemStyle: {
+            emphasis: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+              shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
+          }
+        }
+      ]
+    };
+
+    // 将配置项应用到饼图实例
+    myPieChart.setOption(pieOption);
+
+    // 监听饼图点击事件
+    myPieChart.on('click', function (params) {
+      if (params.name === '重庆') {
+        // 显示图片容器
+        document.getElementById('chongqingImage').style.display = 'block';
+        // 设置图片的路径（您提供的重庆图片路径）
+        document.getElementById('chongqingPic').src = 'static/cq1.png';
+      }
+    });
+  </script>
+</div>
+<!-- 模态窗口（开始隐藏） -->
+<div id="dataModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <!-- 将div.bottom的内容复制到这里或通过JavaScript动态加载 -->
+    <div class="bottom-content">
+      <!-- 这里是 div.bottom 的内容 -->
+
+      <div class="bottom">
+
+
+        <table border="1" style="border-collapse: collapse; ">
+          <tr>
+            <th colspan="6" style="text-align: center; padding: 10px;">传感器接收到的实时数据</th>
+          </tr>
+          <tr>
+            <th style="padding: 10px;">温度值（℃）</th>
+            <th style="padding: 10px;">湿度值（%）</th>
+            <th style="padding: 10px;">光照值（lx）</th>
+            <th style="padding: 10px;">距离</th>
+            <th style="padding: 10px;">日期</th>
+            <th style="padding: 10px;">时 间</th>
+          </tr>
+          <tr>
+            <th style="padding: 10px;">
+              {% for temperature in Temptoweb %}
+              <p>{{ temperature.temperature }}</p>
+              {% endfor %}
+            </th>
+            <th style="padding: 10px;">
+              {% for humidity in Humiditytoweb %}
+              <p>{{ humidity.humidity }}</p>
+              {% endfor %}
+            </th>
+            <th style="padding: 10px;">
+              {% for illumination in Illuminationtoweb %}
+              <p>{{ illumination.illumination }}</p>
+              {% endfor %}
+            </th>
+
+            <th style="padding: 10px;">
+              {% for sr04 in Sr04toweb %}
+              <p>{{ sr04.distance }}</p>
+              {% endfor %}
+            </th>
+            <th style="padding: 10px;">
+              {% for temp in Temptoweb %}
+              <p>{{ temp.date }}</p>
+              {% endfor %}
+            </th>
+            <th style="padding: 10px;">
+              {% for temp in Temptoweb %}
+              <p>{{ temp.time }}</p>
+              {% endfor %}
+            </th>
+          </tr>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- 习性推测模态窗口 -->
+<div id="behaviorModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeBehaviorModal()">&times;</span>
+    <div class="behavior-content">
+      <h2>习性推测数据</h2>
+      <p>这里显示相关毒蜂的习性推测信息，根据它经常活动环境的平均值可知它的习性。</p>
+      <p>若平均温度在15%-30%则证明毒蜂在温暖的环境易生存。但事实证明，蜂群在任何温度下都能生存。</p>
+      <p>若平均湿度在70%-90%则证明毒蜂在潮湿的环境易生存。</p>
+      <p>平均强光照度：光照度大于1000勒克斯，通常毒蜂会出现在高亮度照明的场所，如室外花园、街道等。
+        中等光照度：光照度在300-1000勒克斯之间，通常毒蜂会出现在的室内照明环境。
+        弱光照度：光照度在100-300勒克斯之间，通常毒蜂会出现在柔和的光照环境下，如卧室、客厅等。
+        微弱光照度：光照度小于100勒克斯，通常毒蜂会出现于夜间。</p>
+      <table>
+        <tr>
+          <th style="padding: 10px;">平均温度值（℃）</th>
+          <th style="padding: 10px;">平均湿度值（%）</th>
+          <th style="padding: 10px;">平均光照值（lx）</th>
+        </tr>
+        <tr>
+          <th style="padding: 10px;">
+            {% for avg in Avgtoweb %}
+            <p>{{ avg.tempAVG }}</p>
+            {% endfor %}
+          </th>
+          <th style="padding: 10px;">
+            {% for avg in Avgtoweb %}
+            <p>{{ avg.humiAVG }}</p>
+            {% endfor %}
+          </th>
+
+          <th style="padding: 10px;">
+            {% for avg in Avgtoweb %}
+            <p>{{ avg.ilAVG }}</p>
+            {% endfor %}
+          </th>
+        </tr>
+
+      </table>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+  function updateTemperature(newTemp) {
+    // 计算温度计应该填充的百分比
+    var percentage = (newTemp / 80) * 100; // 假设温度计的最高温度为80°C
+
+    // 确保百分比在0%到100%之间
+    percentage = Math.min(Math.max(percentage, 0), 100);
+
+    // 更新温度计的填充高度和温度值
+    //document.getElementById('temperature').style.height = percentage + '%';
+    //document.getElementById('temperatureValue').innerText = newTemp + '°C';
+  }
+
+  // 示例更新温度，你需要用你自己的逻辑替换这里
+  // 这可以来自实时数据源或用户输入
+  updateTemperature(28); // 示例设置为28°C
+
+
+  function updateHumidity(newHumidity) {
+    // 确保湿度值在0%到100%之间
+    newHumidity = Math.min(Math.max(newHumidity, 0), 100);
+
+    // 更新湿度计的填充宽度和湿度值
+    //document.getElementById('humidity').style.width = newHumidity + '%';
+    //document.getElementById('humidityValue').innerText = '湿度: ' + newHumidity + '%';
+  }
+
+  // 示例更新湿度，你需要用你自己的逻辑替换这里
+  // 这可以来自实时数据源或用户输入
+
+
+  // 创建WebSocket对象，连接到服务器的WebSocket端口
+  const socket = new WebSocket('ws://localhost:8765');
+  console.log(socket);
+
+  // 当连接建立时触发
+  socket.addEventListener('open', function (event) {
+    console.log('WebSocket 连接已建立');
+  });
+
+  // 当接收到来自服务器的消息时触发
+  socket.addEventListener('message', function (event) {
+    // console.log('来自服务器的消息：', event.data);
+    if (event.data.startsWith("frame")) {
+      // 获取消息内容中 "frame" 后面的部分
+      const imageData = event.data.substring(5);
+      // 获取图片元素
+      const imageElement = document.getElementById('image');
+      // 确认 imageElement 存在
+      if (imageElement) {
+        // 将图片元素的 src 属性设置为消息内容
+        imageElement.src = "data:image/png;base64," + imageData;
+      } else {
+        console.error('无法找到图片元素');
+      }
+    }
+  });
+
+  // 当发生错误时触发
+  socket.addEventListener('error', function (event) {
+    console.error('WebSocket 发生错误：', event);
+    // 设置计时器 5s后尝试重连
+    setTimeout(function() {
+      console.log('尝试重新连接 WebSocket...');
+      reconnect();
+    }, 5000);
+  });
+
+  // 当连接关闭时触发
+  socket.addEventListener('close', function (event) {
+    console.log('WebSocket 连接已关闭');
+    // 尝试重连
+    setTimeout(function() {
+      console.log('尝试重新连接 WebSocket...');
+      reconnect();
+    }, 5000);
+  });
+
+  function reconnect() {
+    const newSocket = new WebSocket('ws://localhost:8765');
+    newSocket.addEventListener('open', function (event) {
+      console.log('WebSocket 重新连接已建立');
+    });
+
+    newSocket.addEventListener('message', function (event) {
+      if (event.data.startsWith("frame")) {
+        const imageData = event.data.substring(5);
+        const imageElement = document.getElementById('image');
+        if (imageElement) {
+          imageElement.src = "data:image/png;base64," + imageData;
+        } else {
+          console.error('无法找到图片元素');
+        }
+      }
+    });
+
+    newSocket.addEventListener('error', function (event) {
+      console.error('WebSocket 发生错误：', event);
+      setTimeout(function() {
+        console.log('尝试重新连接 WebSocket...');
+        reconnect();
+      }, 5000);
+    });
+
+    newSocket.addEventListener('close', function (event) {
+      console.log('WebSocket 连接已关闭');
+      setTimeout(function() {
+        console.log('尝试重新连接 WebSocket...');
+        reconnect();
+      }, 5000);
+    });
+  }
+
+  function showVideo() {
+    console.log("exec show video");
+    var imageContainerElement = document.getElementById("image-container");
+    if (imageContainerElement) {
+      imageContainerElement.style.display = "block";
+      imageContainerElement.style.width = "800px";  // 调整宽度为800px
+      imageContainerElement.style.height = "600px"; // 调整高度为600px
+      imageContainerElement.style.top = "10%";
+      imageContainerElement.style.left = "20%";
+      imageContainerElement.style.backgroundColor = "white"; // 设置背景颜色为白色
+    } else {
+      console.error('无法找到图片容器元素');
+    }
+  }
+
+  // 获取模态窗口
+  var modal = document.getElementById("dataModal");
+
+  // 获取打开模态窗口的链接
+  var btn = document.querySelector('li a[href="data.html"]');
+
+  // 获取关闭模态窗口的<span>元素
+  var span = document.getElementsByClassName("close")[0];
+
+  // 点击链接时打开模态窗口
+  // btn.onclick = function(event) {
+  //     event.preventDefault(); // 阻止链接的默认动作
+  //     modal.style.display = "block";
+  // }
+  // 在打开模态窗口的函数中，您可能需要禁用主页面的滚动
+
+
+  // 点击 <span> (x) 关闭模态窗口
+  span.onclick = function() {
+    modal.style.display = "none";
+  }
+
+  // 点击模态窗口外的区域也能关闭窗口
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+  function showDataModal() {
+    // 显示模态窗口
+    var modal = document.getElementById("dataModal");
+    modal.style.display = "block";
+  }
+
+
+  // 获取关闭按钮并为其添加点击事件监听器，以便用户可以关闭模态窗口
+  // var span = document.getElementsByClassName("close")[0]; // 假设你有一个关闭按钮类名为close
+  // span.onclick = function() {
+  //     var modal = document.getElementById("dataModal");
+  //     modal.style.display = "none";
+  // }
+  span.onclick = function(event) {
+    event.stopPropagation(); // 阻止冒泡到父元素
+    var modal = document.getElementById("dataModal");
+    modal.style.display = "none";
+  }
+
+  // // 也可以添加一个事件监听器来处理用户点击模态窗口外部时关闭模态窗口的行为
+  // window.onclick = function(event) {
+  //     var modal = document.getElementById("dataModal");
+  //     if (event.target == modal) {
+  //         modal.style.display = "none";
+  //     }
+  // }
+
+
+  function showDataModal1() {
+    // 显示模态窗口
+    var modal = document.getElementById("dataModal1");
+    modal.style.display = "block";
+  }
+
+
+  // 获取关闭按钮并为其添加点击事件监听器，以便用户可以关闭模态窗口
+  // var span = document.getElementsByClassName("close")[0]; // 假设你有一个关闭按钮类名为close
+  // span.onclick = function() {
+  //     var modal = document.getElementById("dataModal");
+  //     modal.style.display = "none";
+  // }
+  span.onclick = function(event) {
+    event.stopPropagation(); // 阻止冒泡到父元素
+    var modal = document.getElementById("dataModal");
+    modal.style.display = "none";
+  }
+
+  // 显示习性推测模态窗口
+  function showBehaviorModal() {
+    var modal = document.getElementById("behaviorModal");
+    modal.style.display = "block";
+  }
+
+  // 关闭习性推测模态窗口
+  function closeBehaviorModal() {
+    var modal = document.getElementById("behaviorModal");
+    modal.style.display = "none";
+  }
+
+  // 当点击窗口外部时关闭习性推测模态窗口
+  window.onclick = function(event) {
+    var modal = document.getElementById("behaviorModal");
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+
+</script>
+
+</body>
+<style>
+  body {
+    /*background-image: url('static/4.jpg');*/
+    /*background-size: cover;*/
+    /*background-position: center;*/
+    /*background-repeat: no-repeat;*/
+    background:black;
+  }
+
+
+
+  /* 所有div的通用样式 */
+
+
+  /* 导航条 */
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: transparent; /* 保持导航条背景透明 */
+  }
+
+  li {
+    float: right; /* 导航项从右侧开始排列 */
+    margin-right: 40px; /* 设置导航项之间的间距为 30px */
+  }
+
+  li a {
+    display: block;
+    color: #FFFFFF; /* 字体颜色设置为白色 */
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+
+  li a:hover {
+    color: #009900; /* 鼠标悬停时字体颜色改变为绿色 */
+  }
+
+
+  div.top{
+    width: 1376px;
+    height: 25px;
+    background: #009900;
+  }
+
+  li img{
+    width: 50px;
+    height: 50px;
+  }
+  /*
+  p.double {
+      text-align: center;
+      width: 800px;
+      border-style:double;
+      border-style:solid;
+      border-color:#FF9900;
+      border-width:5px;
+      font-size:40px;
+      border-radius: 20px 20px;
+       margin: 0 auto; /* 将元素水平居中对齐 */
+
+
+
+
+  div.left
+  {
+    width:220px;
+    height: 650px;
+    padding:10px;
+    border:0px solid;
+    color: #333;
+    margin:0;
+    position: fixed;
+    left: 0;
+  /* div.left内部分割样式 */
+  .div-left-section {
+    height: 50%; /* 设置高度为父元素的50% */
+    border-bottom: 1px dashed #666; /* 设置分割线样式 */
+    box-sizing: border-box; /* 使内边距(padding)和边框(border)包含在宽度和高度内 */
+    padding: 10px; /* 添加内边距 */
+  }
+
+  /* 最后一个分割部分不需要底部边框 */
+  .div-left-section:last-child {
+    border-bottom: none;
+  }}
+
+
+  /* 安全评分插件样式调整 */
+  /* 安全评分插件样式进一步调整 */
+  /* 安全评分插件样式进一步调整 */
+  .security-score-widget {
+    border-radius: 6px; /* 更细腻的圆角 */
+    background-image: radial-gradient(circle at top right, #4c4d00 ,#333333);
+
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3); /* 更轻的阴影，看起来更精致 */
+    color: #FFFFFF; /* 确保文字颜色的清晰 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 7px; /* 细微调整内边距 */
+    height: 280px; /* 根据需求调整高度 */
+    width: 200px; /* 根据需求调整宽度 */
+    text-align: center;
+    position: relative; /* 为了定位浮动窗口 */
+  }
+
+  .icon-shield {
+    font-size: 2.2em; /* 调整图标大小，使其更加匹配新尺寸 */
+    margin-bottom: 7px; /* 优化图标与标题之间的间距 */
+  }
+
+  .score-title {
+    font-size: 1.3em; /* 微调标题字体大小 */
+    font-weight: bold;
+  }
+
+  .score-value {
+    font-size: 2em; /* 微调分数字体大小 */
+    font-weight: bold;
+    color: #1a1a1a; /* 确保绿色醒目，吸引注意 */
+    margin: 7px 0; /* 微调分数的上下间距 */
+  }
+
+  .score-description {
+    font-size: 0.85em; /* 微调描述文本的大小 */
+  }
+
+  /* 浮动窗口样式 */
+  .tooltip {
+    visibility: hidden; /* 默认不显示 */
+    width: 120px;
+    background-color: #555; /* 深色背景 */
+    color: #fff; /* 白色文字 */
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0; /* 上下内边距 */
+    position: absolute;
+    z-index: 1; /* 确保浮动窗口在最上层 */
+    bottom: 90%; /* 在元素上方显示 */
+    left: 50%; /* 水平居中 */
+    margin-left: -60px; /* 根据宽度调整，保持居中 */
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); /* 轻微的阴影 */
+  /* 箭头效果 */
+  ::after {
+    content: "";
+    position: absolute;
+    top: 100%; /* 箭头在底部 */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent; /* 顶部边框为背景色，其他透明 */
+  }
+  }
+
+  /* 显示浮动窗口的样式 */
+  .security-score-widget:hover .tooltip {
+    visibility: visible; /* 鼠标悬停时显示 */
+  }
+
+  /* 报警次数插件样式 */
+  .alert-count-widget {
+    margin-top: 20px; /* 与上一个组件的间距 */
+    margin-left: 0;
+    border-radius: 6px;
+    background-image: radial-gradient(circle at top right, #394d00,#333333 );
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+    color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 7px;
+    height: 260px; /* 与安全评分插件相同的高度 */
+    width: 190px; /* 与安全评分插件相同的宽度 */
+    left: 0;
+    text-align: center;
+    gap: 20px; /* 控制插件之间的垂直间距 */
+  }
+
+  .icon-bell {
+    font-size: 2.2em;
+    margin-bottom: 7px;
+  }
+
+  .alert-title {
+    font-size: 1.3em;
+    font-weight: bold;
+  }
+
+  .alert-value {
+    font-size: 2em;
+    font-weight: bold;
+    color: #FF4500; /* 报警颜色为橙红色 */
+    margin: 7px 0;
+  }
+
+  .alert-description {
+    font-size: 0.85em;
+  }
+
+
+
+  div.right {
+    width: 320px;
+    height: 695px;
+    padding: 10px;
+    border: 1px solid;
+    border-radius: 10px;
+    color: #FFFFFF;
+    background-image: radial-gradient(circle at top right, #263300,#4D400B );
+    position: fixed;
+    right: 0;
+
+  }
+
+  div.temword{
+    width: 240px;
+    height: 150px;
+    padding: 10px;
+    border: 0px solid;
+    color: #FFFFFF;
+    text-align: center;
+    right: 50px;
+    top: 13%;
+    position: fixed;
+  }
+
+  div.humiword{
+    width: 300px;
+    height: 150px;
+    padding: 10px;
+    border: 0px solid;
+    color: #FFFFFF;
+    text-align: center;
+    top: 40%;
+    margin: auto;
+    position: fixed;
+  }
+
+
+  div.sunword{
+    width: 300px;
+    height: 150px; /* 与内部 div 的高度一致 */
+    padding: 10px;
+    border: 0px solid;
+    color: #FFFFFF;
+    text-align: center;
+    bottom: 5%;
+    right: 20px;
+    margin: auto;
+    position: fixed;
+    display: flex;
+    justify-content: center; /* 居中对齐内容 */
+    align-items: center; /* 垂直居中 */
+  }
+
+
+
+  div.box{
+    width: 600px;
+    height: 350px;
+    border: 1px solid;
+    color: #FFFFFF;
+    border-radius: 10px;
+    position: fixed;
+    left: 46.5%; /* 将元素左边界放在页面水平中心 */
+    transform: translateX(-50%); /* 将元素水平居中对齐 */
+    margin: 0 auto; /* 水平居中 */
+    display: flex;
+    justify-content: center; /* 内容水平居中 */
+    align-items: center; /* 内容垂直居中 */
+  }
+
+
+
+  div.center{
+    width: 600px;
+    height: 320px;
+    padding: 10px;
+    border: 1px solid;
+    color: #FFFFFF;
+    border-radius: 10px;
+    background-image: radial-gradient(circle at top right, #3A5722,#e5ffb3,#786724);
+    position: fixed;
+    left: 46.5%; /* 将元素左边界放在页面水平中心 */
+    bottom: 0%;
+    transform: translateX(-50%); /* 将元素水平居中对齐 */
+    margin: 0 auto; /* 水平居中 */
+    display: flex;
+    justify-content: center; /* 内容水平居中 */
+    align-items: center; /* 内容垂直居中 */
+    z-index: 10; /* 确保这个层叠上下文高于其他元素 */
+  }
+
+  div.bottom{
+    width: 720px;
+    height: 400px;
+    padding: 10px;
+    background-image: radial-gradient(circle at top right, #394d00,#333333 );
+    border: 1px solid;
+    color: #FFFFFF;
+    bottom: 0;
+    margin-left: 50%;
+    transform: translateX(-50%); /* 将元素水平居中对齐 */
+  }
+  div.bottom.temp{
+    width: 720px;
+    height: 40px;
+  }
+  div.bottom.humi{
+    width: 720px;
+    height: 40px;
+  }
+  div.bottom.guangzhao{
+    width: 720px;
+    height: 40px;
+  }
+  div.bottom.gps{
+    width: 720px;
+    height: 40px;
+  }
+  div.bottom.baojing{
+    width: 720px;
+    height: 40px;
+  }
+
+  #popup {
+    width: 400px;
+    height: 400px;
+  }
+
+  p{
+    font-size:11px;
+    margin-top:0px;
+  }
+  /* 模态窗口样式 */
+  .modal {
+    display: none; /* 默认隐藏 */
+    position: fixed; /* 固定位置 */
+    z-index: 1000; /* 高于其他内容的层级 */
+    right: 150px;
+    top: 0;
+    width: 80%; /* 宽度占满整个屏幕 */
+    height: 100%; /* 高度占满整个屏幕 */
+    overflow: auto; /* 滚动条 */
+    background-color: rgba(0,0,0,0.6); /* 半透明背景 */
+  }
+
+  .modal-content {
+    background-color: #fefefe;
+    margin: 10% auto; /* 在屏幕中央显示 */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* 模态窗口宽度 */
+    z-index: 1001; /* 高于 modal 背景的层级 */
+  }
+
+
+  /* 模态内容框 */
+
+
+  /* 关闭按钮 */
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .modal-content {
+    width: auto; /* 宽度根据内容自动调整 */
+    max-width: 95%; /* 限制最大宽度，避免贴边 */
+    background-color: #FFFFCC;
+    margin: 5% auto; /* 调整为页面顶部留有更少的空间 */
+    padding: 20px;
+    border: 1px solid #888;
+    overflow-y: auto; /* 如果内容太长，允许垂直滚动 */
+    max-height: 80vh; /* 限制最大高度，视图高度的80% */
+    overflow-x: auto; /* 如果内容太宽，允许水平滚动 */
+  }
+
+  /* 表格样式 */
+  table {
+    width: 700px; /* 表格宽度为100%，以适应容器宽度 */
+    max-width: 100%; /* 确保表格不会超过其容器 */
+    overflow-x: auto; /* 允许水平滚动 */
+    overflow-y: auto; /* 允许水平滚动 */
+  }
+  .box .slider-item {
+    margin: 0;
+  }
+  .box,.box li,
+  .box img {
+    width: 600px;
+    height: 400px;
+  }
+  .box {
+    margin: 100px auto;
+    position: relative;
+    overflow: hidden;
+  }
+  .box .slider {
+    width: 3500px;
+    position: absolute;
+    /* left: -600px; */
+    top: 0;
+    left: 0; /* 开始显示第一张图片 */
+  }
+  .box ul li {
+    float: left;
+  }
+  .circle {
+    position: absolute;
+    height: 20px;
+    left: 280px;
+    bottom: 10px;
+  }
+  .circle li{
+    width: 16px;
+    height: 16px;
+    background-color: #fff;
+    border-radius: 8px;
+    line-height: 16px;
+    text-align: center;
+    margin-left: 0px;
+    cursor: pointer;
+    float: left;
+  }
+  .arrow {
+    position: absolute;
+    top: 50%;
+    width: 30px;
+    height: 30px;
+    background: rgba(0,0,0,.5);
+    color: #fff;
+    font-size: 24px;
+    text-align: center;
+    line-height: 30px;
+    display: none;
+  }
+  .arrow:hover {
+    background: rgba(0,0,0,.3);
+  }
+  .prev {
+    left: 10px;
+  }
+  .next {
+    right: 10px;
+  }
+  .circle .current {
+    background-color: forestgreen;
+    color: #fff;
+  }
+
+  #chongqingImage {
+    display: none;
+    position: fixed;
+    /*top: 0;*/
+    /*left: 0;*/
+    width: 600px;
+    height: 320px;
+    background-color: rgba(0, 0, 0, 0.8); /* 背景色和透明度 */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* 调整图片容器的层级，确保在网页上方 */
+  }
+  /* 图片样式 */
+  #chongqingPic {
+    max-width: 600px; /* 限制图片宽度 */
+    max-height: 320px; /* 限制图片高度 */
+    border: 2px solid white;
+    border-radius: 5px;
+  }
+  /* 图片关闭按钮样式 */
+  #closeButton {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+  }
+
+</style>
+
+
+
+</html>

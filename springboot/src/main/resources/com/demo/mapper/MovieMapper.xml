@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.mapper.MovieMapper" >
+    <resultMap id="BaseResultMap" type="com.demo.javaBean.Movie" >
+        <id column="Id" property="Id" jdbcType="VARCHAR" />
+        <result column="temperature" property="temperature" jdbcType="VARCHAR" />
+        <result column="humi" property="humi" jdbcType="VARCHAR" />
+        <result column="illumination" property="illumination" jdbcType="VARCHAR" />
+        <result column="pictureUrl" property="pictureUrl" jdbcType="VARCHAR" />
+    </resultMap>
+
+
+    <select id="selectAll" resultType="com.demo.javaBean.Movie">
+        select * FROM  movies
+    </select>
+
+
+</mapper>

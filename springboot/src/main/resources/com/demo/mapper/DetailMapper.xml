@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.mapper.DetailMapper" >
+    <resultMap id="BaseResultMap" type="com.demo.javaBean.Detail" >
+        <id column="movieId" property="movieId" jdbcType="VARCHAR" />
+        <result column="temp" property="temp" jdbcType="VARCHAR" />
+        <result column="humidity" property="humidity" jdbcType="VARCHAR" />
+        <result column="light" property="light" jdbcType="VARCHAR" />
+        <result column="alarm" property="alarm" jdbcType="VARCHAR" />
+        <result column="time" property="time" jdbcType="VARCHAR" />
+        <result column="place" property="place" jdbcType="VARCHAR" />
+    </resultMap>
+
+
+    <select id="selectDetail" resultType="com.demo.javaBean.Detail">
+    select * from movie
+    </select>
+
+    <select id="selectById" parameterType="java.lang.String" resultType="com.demo.javaBean.Detail">
+    select temp, humidity, light, alarm, time
+    from movie
+    where movieId = #{movieId}
+    </select>
+
+    <insert id="insertMovie" >
+        insert into movie (movieId, temp, humidity, light, alarm, time, place)
+        values (#{movieId}, #{temp}, #{humidity}, #{light}, #{alarm}, #{time}, #{place})
+
+    </insert>
+</mapper>

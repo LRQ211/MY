@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>实时图像显示</title>
+</head>
+<body>
+<h1>实时图像显示</h1>
+<img id="liveImage" src="" alt="实时图像" style="width: 600px; height: auto;"/>
+<script>
+  function fetchImage() {
+    console.log('Fetching new image...');
+    fetch('/image/latest')
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+              }
+              return response.blob();
+            })
+            .then(blob => {
+              const url = URL.createObjectURL(blob);
+              const imgElement = document.getElementById('liveImage');
+              imgElement.src = url;
+              console.log('Image updated:', url);
+            })
+            .catch(error => console.error('Error fetching the image:', error));
+  }
+
+  // 每隔一秒获取一次最新图像
+  setInterval(fetchImage, 1000);
+</script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
+      xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.staticfile.net/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://cdn.staticfile.net/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdn.staticfile.net/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<style>
+
+  body{
+    background-color: #333;
+  }
+  .nav-tabs > li > a { color:#e5ffe5; } .nav-tabs > li.active > a { color: green; } .nav-tabs { background-color: #333; color: #ccc; }
+  .tab-content {
+    background-color: #e5ffe5; color: black; padding: 10px;
+  }
+</style>
+<body>
+<ul id="myTab" class="nav nav-tabs">
+  <li class="active">
+    <a href="#home" data-toggle="tab">
+      数据分析
+    </a>
+  </li>
+  <li><a href="#ios" data-toggle="tab">环境因素</a></li>
+  <li class="dropdown">
+    <a href="#" id="myTabDrop1" class="dropdown-toggle"
+       data-toggle="dropdown">环境数据查看
+      <b class="caret"></b>
+    </a>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1">
+      <li><a href="#温度数据" tabindex="-1" data-toggle="tab">温度数据</a></li>
+      <li><a href="#湿度数据" tabindex="-1" data-toggle="tab">湿度数据</a></li>
+      <li><a href="#光照数据" tabindex="-1" data-toggle="tab">光照数据</a></li>
+    </ul>
+  </li>
+</ul>
+<div id="myTabContent" class="tab-content">
+  <div class="tab-pane fade in active" id="home">
+    <p>了解毒蜂生存环境数据可以帮助研究人员更好地理解毒蜂的生态需求和行为习性，有助于制定保护措施和管理计划。
+
+      通过分析毒蜂的生存环境数据，可以识别潜在的生存威胁和风险因素，帮助预防毒蜂的传播和侵害。
+
+      生存环境数据还可以用来评估毒蜂种群数量和分布情况，为相关研究和保护工作提供重要依据。
+
+      通过对毒蜂的生存环境数据进行分析，可以为保护生态系统的生物多样性和稳定性提供重要参考，促进生态平衡的维护和可持续发展。
+
+      最后，对毒蜂的生存环境数据进行分析，还可以帮助预测未来可能发生的生态变化和气候变化对毒蜂栖息地的影响，促进早期干预和调整措施的实施。</p>
+  </div>
+  <div class="tab-pane fade" id="ios">
+    <p>一、光照强度：光照强度的分析对毒蜂的生存环境至关重要。光照强度可以影响毒蜂的活动规律、取食行为、繁殖和迁徙。在阳光充足的环境下，毒蜂容易活跃并更容易发现食物来源。适宜的光照强度还对毒蜂的导航和定位起到重要作用。</br>
+      二、温度：毒蜂对温度的适宜范围有一定要求。温度过高或过低都可能对毒蜂的生存产生影响。适宜的温度有助于毒蜂的生长繁殖和捕食行为，同时也影响毒蜂的新陈代谢和行动能力。温度过高可能导致毒蜂出现疲劳、活动减缓，而过低的温度则可能影响毒蜂的食物获取和取食速度。</br>
+      三、湿度：湿度也是影响毒蜂生存的重要因素。适宜的湿度有助于毒蜂维持体内水分平衡，同时也会影响毒蜂巢穴内部的湿度和通风。过高或过低的湿度可能导致巢穴内部潮湿或干燥，影响毒蜂的生活状态和健康。</br>
+    </p>
+
+  </div>
+  <div class="tab-pane fade" id="jmeter">
+    <p></p>
+  </div>
+  <div class="tab-pane fade" id="ejb">
+    <p>
+    </p>
+  </div>
+</div>
+</body>
+</html>
